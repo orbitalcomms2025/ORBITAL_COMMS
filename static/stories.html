@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stories - Orbital Comms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- ================= RESET + BASE ================= -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #EDEDED;
+      background: #0a0a0a;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; border-radius: 15px; }
+  </style>
+
+  <!-- ================= ESTILO EXISTENTE DE STORIES ================= -->
+  <style>
+    body {
+      background: linear-gradient(to bottom, #001d3d, #003566);
+      overflow-x: hidden;
+      color: #fff;
+    }
+
+    header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.7);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    header a {
+      color: #ffdd57;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    header a:hover {
+      color: #fff;
+    }
+
+    .stories-container {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 20px;
+      text-align: center;
+    }
+    .stories-container h2 {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+    }
+    .story-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: left;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .story-card:hover {
+      transform: scale(1.02);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .story-card h3 {
+      margin: 0 0 10px;
+      color: #ffdd57;
+    }
+    .story-card p {
+      line-height: 1.6;
+    }
+    .story-card a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #00b4d8;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .story-card a:hover {
+      color: #ffdd57;
+    }
+
+    /* Animación del ícono triste */
+    .sad-icon {
+      font-size: 2rem;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      animation: pulse 2s infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Stories</h1>
+  <a href="../index.html">Back to Home</a>
+</header>
+
+<section class="stories-container">
+  <h2>Real Stories from El Niño in Northern Peru</h2>
+
+  <div class="story-card">
+    <div class="sad-icon">😔</div>
+    <h3>Piura inundada – marzo 2017</h3>
+    <p>In March 2017, the Piura River overflowed, flooding entire districts. Thousands lost homes, infrastructure collapsed, and rescue had to be carried out by boat.</p>
+    <a href="../stories/story1.html">Read More</a>
+  </div>
+
+  <div class="story-card">
+    <div class="sad-icon">😔</div>
+    <h3>Families displaced to the desert</h3>
+    <p>After the 2017 floods, around 2,000 families had to relocate to desert zones near the Piura–Chiclayo highway, building makeshift shelters without basic services.</p>
+    <a href="../stories/story2.html">Read More</a>
+  </div>
+
+  <div class="story-card">
+    <div class="sad-icon">😔</div>
+    <h3>Collapse of Piura’s bridges – 1998</h3>
+    <p>During the strong El Niño of 1997–1998, the Bolognesi and San Miguel bridges collapsed due to the Piura River surge, isolating the city and causing casualties.</p>
+    <a href="../stories/story3.html">Read More</a>
+  </div>
+
+  <div class="story-card">
+    <div class="sad-icon">😔</div>
+    <h3>Loss of crops and agricultural crisis</h3>
+    <p>Heavy rains and floods destroyed rice, corn, and banana fields in Piura, leaving thousands of small farmers without food security or income.</p>
+    <a href="../stories/story4.html">Read More</a>
+  </div>
+
+  <div class="story-card">
+    <div class="sad-icon">😔</div>
+    <h3>Community innovation and local aid</h3>
+    <p>Local volunteers organized rescue boats, improvised safe paths, and distributed aid to isolated families during the 2017 Niño Costero emergency.</p>
+    <a href="../stories/story5.html">Read More</a>
+  </div>
+
+  <div class="story-card">
+    <div class="sad-icon">😔</div>
+    <h3>Mass displacement from rural Piura</h3>
+    <p>In 2017, almost 300,000 people were displaced in northern Peru after losing their homes and fields, many forced to abandon agriculture and live without basic services.</p>
+    <a href="../stories/story6.html">Read More</a>
+  </div>
+
+</section>
+
+</body>
+</html>

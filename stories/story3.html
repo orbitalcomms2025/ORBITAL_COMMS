@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bridge Collapse – 1998 | Orbital Comms Stories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/stories.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>Bridge Collapse – 1998</h1>
+  </div>
+  <nav>
+    <a href="../static/stories.html">Back to Stories</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="hero" class="story-block">
+  <div class="hero-content">
+    <h1>When Piura Was Isolated</h1>
+    <img src="../assets/images/story3.jpg" alt="Collapsed bridge in Piura 1998">
+  </div>
+</section>
+
+<!-- STORY CONTENT -->
+<section class="story-content story-block">
+  <p>
+    During the <b>1997–1998 El Niño Phenomenon</b>, heavy rains and the increase in the Piura River’s flow caused the collapse of key bridges in the city, 
+    including the <b>Bolognesi Bridge</b> and the <b>San Miguel Bridge</b>. This event isolated much of the city and left hundreds of people trapped in their neighborhoods.
+  </p>
+
+  <p class="highlight">
+    “The river swept everything in its path; seeing the bridges give way to the force of the water was terrifying for residents.”
+  </p>
+
+  <h2>Impact</h2>
+  <ul>
+    <li>Hundreds of people were trapped in areas like La Arena and Catacaos.</li>
+    <li>Vehicles and houses near the bridges suffered serious damage.</li>
+    <li>Several injuries and deaths were reported due to the collapse and flooding.</li>
+    <li>City transportation and logistics were paralyzed for several days.</li>
+  </ul>
+
+  <h2>Response and Reconstruction</h2>
+  <p>
+    Local authorities worked to set up temporary crossings and bring humanitarian aid to the isolated neighborhoods. 
+    Later, the bridges were rebuilt with stronger standards, learning from the infrastructure weaknesses exposed by the tragedy.
+  </p>
+
+  <h2>Lessons Learned</h2>
+  <p>
+    1. Urban planning must consider extreme natural events.<br>
+    2. Critical infrastructure requires resilient hydraulic and seismic design.<br>
+    3. Coordination between authorities and communities is key for evacuation and rescue.<br>
+    4. Monitoring rivers and drainage systems prevents similar disasters.
+  </p>
+
+  <p class="sources">
+    <i>
+      Sources: La República – “El Niño 1998: Bridges Collapse in Piura” • RPP – “Bolognesi and San Miguel Bridges Fall” • El Comercio – “Piura Isolated After River Overflow”.
+    </i>
+  </p>
+</section>
+
+<!-- NAVIGATION -->
+<div class="story-nav">
+  <button id="prevStory">Previous Story</button>
+  <button id="nextStory">Next Story</button>
+</div>
+
+<footer>
+  &copy; 2025 Orbital Comms Stories
+</footer>
+
+<script>
+  // ================= APPEAR ANIMATION =================
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.story-block').forEach(el => el.classList.add('visible'));
+  });
+
+  // ================= STORY NAVIGATION =================
+  const prev = document.getElementById('prevStory');
+  const next = document.getElementById('nextStory');
+  prev.addEventListener('click', () => { window.location.href = 'story2.html'; });
+  next.addEventListener('click', () => { window.location.href = 'story4.html'; });
+</script>
+
+</body>
+</html>
