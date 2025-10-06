@@ -1,181 +1,321 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Routes & Construction Analysis — Orbital Coms</title>
   <meta charset="UTF-8">
-  <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <meta name="description" content="Orbital Comms: Real-time information on natural disasters for effective response and preparedness">
-  <meta name="author" content="Orbital Comms Team">
-  <meta name="theme-color" content="#00FFEA"> 
-  <link rel="stylesheet" href="../css/rutas.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NASA Climate Analysis System - Professional disaster prevention and route planning using real-time NASA satellite data">
+  <meta name="keywords" content="NASA, climate analysis, disaster prevention, safe routes, construction analysis">
+  <meta name="author" content="NASA Climate Analysis Team">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>NASA Climate Analysis System - Disaster Prevention & Route Planning</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+        crossorigin="anonymous" />
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/rutas.css">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 </head>
 <body>
 
-  <!-- TOPBAR -->
-  <div id="topbar">
-    <h1>🛣️ SAFE ROUTES & CONSTRUCTION ANALYSIS</h1>
+  <!-- Main Application Container -->
+  <div id="app">
+    
+    <!-- ===== LEFT SIDEBAR - CONTROL PANEL ===== -->
+    <aside class="sidebar" role="complementary" aria-label="Control Panel">
+      
+      <!-- Header Section -->
+      <header class="header">
+        <h1>NASA Climate Analysis</h1>
+        <p>Disaster Prevention Through Real Satellite Data</p>
+      </header>
 
-    <div id="controls">
-      <label for="date">Quick Date:</label>
-      <input id="date" type="date" />
-      <button id="goDate" class="btn secondary" title="Apply date to layers">Apply</button>
-      <a href="map.html" class="btn" title="Back to main map">← Main Map</a>
-    </div>
-  </div>
+      <!-- Control Panel Content -->
+      <div class="control-panel">
+        
+        <!-- Location Search Section -->
+        <section class="control-section">
+          <h3>
+            <span class="section-icon" aria-hidden="true">📍</span>
+            Location Search
+          </h3>
+          
+          <div class="search-container">
+            <input 
+              type="text" 
+              id="searchInput" 
+              placeholder="City name or coordinates (-5.2, -80.6)" 
+              aria-label="Search for location"
+              autocomplete="off"
+            />
+            <div id="searchResults" role="listbox" aria-label="Search results"></div>
+          </div>
+          
+          <p class="helper-text">
+            Enter a city name or coordinates in format: latitude, longitude
+          </p>
+        </section>
 
-  <!-- CONTROL PANEL (LEFT SIDE) -->
-  <div id="controlPanel" class="visible">
-    <div class="panel-header">
-      <h2>Analysis Control Panel</h2>
-      <div class="panel-header-buttons">
-        <button id="minimizeControl" class="minimizeBtn" title="Minimize">−</button>
-        <button id="closeControl" class="closeBtn" title="Close">×</button>
+        <!-- Date Range Section -->
+        <section class="control-section">
+          <h3>
+            <span class="section-icon" aria-hidden="true">📅</span>
+            Analysis Period
+          </h3>
+          
+          <div class="date-inputs">
+            <div class="date-group">
+              <label for="dateStart">Start Date</label>
+              <input 
+                type="date" 
+                id="dateStart" 
+                aria-label="Analysis start date"
+                required
+              />
+            </div>
+            
+            <div class="date-group">
+              <label for="dateEnd">End Date</label>
+              <input 
+                type="date" 
+                id="dateEnd" 
+                aria-label="Analysis end date"
+                required
+              />
+            </div>
+          </div>
+          
+          <p class="helper-text">
+            Select date range for climate data analysis (recommended: 3-30 days)
+          </p>
+        </section>
+
+        <!-- Analysis Mode Section -->
+        <section class="control-section">
+          <h3>
+            <span class="section-icon" aria-hidden="true">🔍</span>
+            Analysis Mode
+          </h3>
+          
+          <div class="mode-selector" role="radiogroup" aria-label="Select analysis mode">
+            
+            <div class="radio-option">
+              <input 
+                type="radio" 
+                id="modeRoute" 
+                name="analysisMode" 
+                value="route" 
+                checked
+                aria-describedby="route-description"
+              />
+              <label for="modeRoute">
+                <span class="mode-icon" aria-hidden="true">🛣️</span>
+                <span class="mode-details">
+                  <strong>Safe Route Analysis</strong>
+                  <small id="route-description">Evaluate travel safety and evacuation routes</small>
+                </span>
+              </label>
+            </div>
+            
+            <div class="radio-option">
+              <input 
+                type="radio" 
+                id="modeConstruction" 
+                name="analysisMode" 
+                value="construction"
+                aria-describedby="construction-description"
+              />
+              <label for="modeConstruction">
+                <span class="mode-icon" aria-hidden="true">🏗️</span>
+                <span class="mode-details">
+                  <strong>Construction Site Analysis</strong>
+                  <small id="construction-description">Assess site viability for building projects</small>
+                </span>
+              </label>
+            </div>
+            
+          </div>
+        </section>
+
+        <!-- Process Button -->
+        <section class="control-section">
+          <button 
+            id="btnProcess" 
+            class="btn-primary" 
+            type="button"
+            aria-label="Start analysis process"
+          >
+            <span class="btn-icon" aria-hidden="true">🚀</span>
+            Process Analysis
+          </button>
+        </section>
+
+        <!-- Map Controls Section -->
+        <section class="control-section">
+          <h3>
+            <span class="section-icon" aria-hidden="true">🗺️</span>
+            Map Display
+          </h3>
+          
+          <button 
+            id="btnCities" 
+            class="btn-secondary" 
+            type="button"
+            aria-label="Toggle city labels on map"
+            aria-pressed="false"
+          >
+            <span class="btn-icon" aria-hidden="true">🏙️</span>
+            Toggle City Labels
+          </button>
+        </section>
+
+        <!-- Quick Info -->
+        <section class="control-section info-section">
+          <div class="info-badge">
+            <span class="badge-icon" aria-hidden="true">ℹ️</span>
+            <div class="badge-content">
+              <strong>Data Sources:</strong>
+              <small>NASA POWER, NASA EONET, Open-Elevation</small>
+            </div>
+          </div>
+        </section>
+
       </div>
-    </div>
+    </aside>
 
-    <div class="panel-content">
+    <!-- ===== MAP CONTAINER ===== -->
+    <main class="map-container" role="main">
+      
+      <!-- Leaflet Map -->
+      <div 
+        id="map" 
+        role="application" 
+        aria-label="Interactive climate analysis map"
+      ></div>
 
-    <!-- SEARCH LOCATION -->
-    <div class="control-section">
-      <label class="control-label">📍 Search Location</label>
-      <div class="search-wrapper">
-        <input 
-          type="text" 
-          id="searchLocation" 
-          placeholder="City name or coordinates (lat, lon)..."
-          class="search-input"
-        />
-        <div id="searchResults" class="search-results"></div>
+      <!-- Coordinates Display -->
+      <div 
+        id="coords" 
+        role="status" 
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        Hover over map to see coordinates
       </div>
-      <small class="help-text">Example: Piura, Peru or -5.2, -80.6</small>
-    </div>
 
-    <!-- DATE RANGE -->
-    <div class="control-section">
-      <label class="control-label">📅 Analysis Period</label>
-      <div class="date-range-grid">
-        <div class="date-input-group">
-          <label for="dateStart">From:</label>
-          <input type="date" id="dateStart" class="date-input" />
+      <!-- Map Legend (dynamically inserted by JS) -->
+      
+    </main>
+
+    <!-- ===== RESULTS PANEL ===== -->
+    <aside 
+      id="resultPanel" 
+      class="results-panel" 
+      role="complementary" 
+      aria-label="Analysis Results"
+      aria-hidden="true"
+    >
+      
+      <!-- Panel Header -->
+      <div class="panel-header">
+        <h2>Analysis Results</h2>
+        <div class="panel-controls">
+          <button 
+            id="minResults" 
+            class="panel-btn" 
+            type="button"
+            aria-label="Minimize results panel"
+            title="Minimize"
+          >
+            −
+          </button>
+          <button 
+            id="closeResults" 
+            class="panel-btn" 
+            type="button"
+            aria-label="Close results panel"
+            title="Close"
+          >
+            ×
+          </button>
         </div>
-        <div class="date-input-group">
-          <label for="dateEnd">To:</label>
-          <input type="date" id="dateEnd" class="date-input" />
+      </div>
+
+      <!-- Panel Content -->
+      <div 
+        id="resultsContent" 
+        class="panel-content"
+        role="region"
+        aria-label="Analysis results content"
+      >
+        <!-- Empty State -->
+        <div class="empty-state">
+          <div class="empty-icon" aria-hidden="true">📊</div>
+          <h3>No Analysis Yet</h3>
+          <p>Select a location and date range, then click "Process Analysis" to view detailed climate data and recommendations.</p>
+          <div class="empty-steps">
+            <div class="empty-step">
+              <span class="step-number">1</span>
+              <span>Search location</span>
+            </div>
+            <div class="empty-step">
+              <span class="step-number">2</span>
+              <span>Choose dates</span>
+            </div>
+            <div class="empty-step">
+              <span class="step-number">3</span>
+              <span>Select mode</span>
+            </div>
+            <div class="empty-step">
+              <span class="step-number">4</span>
+              <span>Process</span>
+            </div>
+          </div>
         </div>
+        
+        <!-- Results will be dynamically inserted here by JavaScript -->
       </div>
-    </div>
+      
+    </aside>
 
-    <!-- ANALYSIS MODE -->
-    <div class="control-section">
-      <label class="control-label">🔬 Analysis Mode</label>
-      <div class="mode-selector">
-        <label class="mode-option">
-          <input type="radio" name="analysisMode" id="modeRoute" value="route" checked />
-          <span class="mode-content">
-            <span class="mode-icon">🛣️</span>
-            <span class="mode-title">Safe Route</span>
-            <span class="mode-desc">Is it safe to travel?</span>
-          </span>
-        </label>
-        <label class="mode-option">
-          <input type="radio" name="analysisMode" id="modeConstruction" value="construction" />
-          <span class="mode-content">
-            <span class="mode-icon">🏗️</span>
-            <span class="mode-title">Construction</span>
-            <span class="mode-desc">Can I build here?</span>
-          </span>
-        </label>
-      </div>
-    </div>
-
-    <!-- PROCESS BUTTON -->
-    <button id="btnProcess" class="btn-process">
-      🚀 Process Analysis
-    </button>
-
-    <!-- LAYER TOGGLES -->
-    <div class="control-section">
-      <label class="control-label">Map Overlays</label>
-      <div class="layer-toggles">
-        <button id="btnToggleCities" class="btn-toggle">Cities</button>
-        <button id="btnToggleSST" class="btn-toggle">SST</button>
-        <button id="btnToggleIMERG" class="btn-toggle">IMERG</button>
-      </div>
-    </div>
-
-    <!-- EXPLORATION MODE TOGGLE -->
-    <div class="control-section">
-      <label class="control-label">Map Interaction</label>
-      <button id="btnExplorationMode" class="btn-exploration">
-        Exploration OFF
-      </button>
-      <small class="help-text">Enable to mark custom points on maps</small>
-    </div>
-    </div> <!-- End panel-content -->
-  </div> <!-- End controlPanel -->
-
-  <!-- TWO STACKED MAPS -->
-  <div id="mapsWrapper">
-    <!-- TOP MAP: Current Climate Visualization -->
-    <div class="map-container">
-      <div class="map-label">🌍 Current Climate Data (NASA GIBS)</div>
-      <div id="mapRoutes" aria-label="Climate data visualization map"></div>
-    </div>
-
-    <!-- BOTTOM MAP: Analysis Results -->
-    <div class="map-container">
-      <div class="map-label">📊 Analysis Results</div>
-      <div id="mapBuild" aria-label="Analysis results map"></div>
-    </div>
   </div>
 
-  <!-- SST LEGEND -->
-  <div class="legendSmall" id="legendSmall">
-    <div class="legend-title">🌡️ SST Anomalies</div>
-    <div class="legend-row">
-      <div class="colorBox" style="background: linear-gradient(90deg,#0000ff,#00ffff)"></div>
-      <span>Cooling</span>
-    </div>
-    <div class="legend-row">
-      <div class="colorBox" style="background: linear-gradient(90deg,#ffff00,#ff9800)"></div>
-      <span>Neutral</span>
-    </div>
-    <div class="legend-row">
-      <div class="colorBox" style="background: linear-gradient(90deg,#ff5722,#d500f9)"></div>
-      <span>Warming</span>
-    </div>
-    <div class="legend-footer">Red = El Niño</div>
-  </div>
+  <!-- ===== TOAST CONTAINER (dynamically created by JS) ===== -->
+  <!-- Toast notifications will appear here -->
 
-  <!-- RESULTS PANEL (RIGHT) -->
-  <div id="resultPanel">
-    <button id="closeResults" class="closeBtn" aria-label="Close results">×</button>
-    <div id="resultsContent">
-      <div class="empty-state">
-        <div class="empty-icon">📊</div>
-        <h3>No Analysis Yet</h3>
-        <p>Search for a location, select dates and mode, then click "Process Analysis" to see results here.</p>
-      </div>
-    </div>
-  </div>
+  <!-- ===== TUTORIAL OVERLAY (dynamically created by JS) ===== -->
+  <!-- Tutorial will be shown on first visit -->
 
-  <!-- INFO COORDINATES -->
-  <div id="info" class="infoPane">
-    <strong>📍 Coordinates</strong>
-    <div id="coords">Click on map or search location</div>
-    <hr style="margin:8px 0; border:none; border-top:1px solid #ddd;">
-    <div id="layerInfo">System: NASA GIBS + Esri</div>
-  </div>
-
-  <!-- SCRIPTS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  <!-- ===== SCRIPTS ===== -->
+  
+  <!-- Leaflet JS -->
+  <script 
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+    crossorigin="anonymous"
+  ></script>
+  
+  <!-- jsPDF for PDF generation -->
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+    integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
+    crossorigin="anonymous"
+  ></script>
+  
+  <!-- Main Application Script -->
   <script src="rutas.js"></script>
+
+  <!-- Accessibility Announcements -->
+  <div id="a11y-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
 </body>
 </html>
