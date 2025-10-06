@@ -1,84 +1,87 @@
-// map.js — Versión mejorada con SST correcto y animación arrastrable
+// map.js - Professional English version with floating tab system
 
 const peruBounds = [[-18.5, -81.5], [1.0, -68.0]];
 const piuraBounds = [[-5.3, -80.75], [-5.1, -80.55]];
 
-// Fecha 3 días atrás (delay de procesamiento NASA GIBS)
+// Date 3 days ago (NASA GIBS processing delay)
 const dateObj = new Date();
 dateObj.setUTCDate(dateObj.getUTCDate() - 3);
 const today = dateObj.toISOString().split('T')[0];
 
+/* ===========================
+   RISK ZONES DATA
+=========================== */
 
-const zonasRiesgo = {
+const riskZones = {
   piura: {
     name: "Piura",
     bounds: [[-5.5, -81], [-4.8, -80.3]],
-    riesgo: "ALTO",
-    precipitacion: "350-450 mm/mes",
-    probabilidad: 85,
-    recomendaciones: [
-      "Evitar zonas bajas propensas a inundación",
-      "Preparar kit de emergencia familiar",
-      "Monitorear alertas de SENAMHI",
-      "Reforzar techos y drenajes"
+    risk: "HIGH",
+    precipitation: "350-450 mm/month",
+    probability: 85,
+    recommendations: [
+      "Avoid low-lying flood-prone areas",
+      "Prepare family emergency kit",
+      "Monitor SENAMHI alerts",
+      "Reinforce roofs and drainage systems"
     ]
   },
   tumbes: {
     name: "Tumbes",
     bounds: [[-4.5, -80.8], [-3.2, -80]],
-    riesgo: "ALTO",
-    precipitacion: "300-400 mm/mes",
-    probabilidad: 82,
-    recomendaciones: [
-      "Riesgo de desborde de ríos",
-      "Evacuar zonas costeras bajas",
-      "Almacenar agua potable y alimentos",
-      "Identificar rutas de evacuación"
+    risk: "HIGH",
+    precipitation: "300-400 mm/month",
+    probability: 82,
+    recommendations: [
+      "Risk of river overflow",
+      "Evacuate low coastal areas",
+      "Store drinking water and food",
+      "Identify evacuation routes"
     ]
   },
   lambayeque: {
     name: "Lambayeque",
     bounds: [[-7.2, -80.2], [-5.9, -79.2]],
-    riesgo: "MODERADO-ALTO",
-    precipitacion: "200-300 mm/mes",
-    probabilidad: 70,
-    recomendaciones: [
-      "Monitorear cauces de ríos",
-      "Preparar sistemas de drenaje",
-      "Revisar estado de infraestructura",
-      "Estar atento a alertas locales"
+    risk: "MODERATE-HIGH",
+    precipitation: "200-300 mm/month",
+    probability: 70,
+    recommendations: [
+      "Monitor river channels",
+      "Prepare drainage systems",
+      "Check infrastructure status",
+      "Stay alert to local warnings"
     ]
   },
   laLibertad: {
     name: "La Libertad",
     bounds: [[-8.5, -79.5], [-7.0, -78.2]],
-    riesgo: "MODERADO",
-    precipitacion: "150-250 mm/mes",
-    probabilidad: 60,
-    recomendaciones: [
-      "Vigilar quebradas secas",
-      "Preparar plan familiar de emergencia",
-      "Revisar seguros de vivienda",
-      "Evitar construcciones en laderas"
+    risk: "MODERATE",
+    precipitation: "150-250 mm/month",
+    probability: 60,
+    recommendations: [
+      "Watch dry ravines",
+      "Prepare family emergency plan",
+      "Review home insurance",
+      "Avoid hillside construction"
     ]
   },
   lima: {
     name: "Lima",
     bounds: [[-12.5, -77.5], [-11.5, -76.5]],
-    riesgo: "BAJO-MODERADO",
-    precipitacion: "50-100 mm/mes",
-    probabilidad: 35,
-    recomendaciones: [
-      "Impacto menor en costa",
-      "Posibles huaicos en zonas altas",
-      "Mantener limpieza de desagües",
-      "Revisar estado de viviendas precarias"
+    risk: "LOW-MODERATE",
+    precipitation: "50-100 mm/month",
+    probability: 35,
+    recommendations: [
+      "Minor coastal impact",
+      "Possible landslides in highlands",
+      "Keep drains clean",
+      "Check precarious housing status"
     ]
   }
 };
 
 /* ===========================
-   PLANTILLAS WMTS
+   WMTS TEMPLATES
 =========================== */
 
 function imergTemplate(time) {
@@ -90,7 +93,7 @@ function sstAnomalyTemplate(time) {
 }
 
 /* ===========================
-   UTILIDADES
+   UTILITIES
 =========================== */
 
 function createToast(message, type = 'info', duration = 4000) {
@@ -112,37 +115,37 @@ function createToast(message, type = 'info', duration = 4000) {
   }, duration);
 }
 
-function generarDatosAleatorios(cantidad = 200) {
-  const puntos = [];
-  for (let i = 0; i < cantidad; i++) {
+function generateRandomData(quantity = 200) {
+  const points = [];
+  for (let i = 0; i < quantity; i++) {
     const lat = (Math.random() * 180) - 90;
     const lon = (Math.random() * 360) - 180;
-    const intensidad = Math.random();
-    puntos.push([lat, lon, intensidad]);
+    const intensity = Math.random();
+    points.push([lat, lon, intensity]);
   }
-  return puntos;
+  return points;
 }
 
-function generarPrediccionesFuturas(cantidad = 100) {
-  const puntos = [];
-  for (let i = 0; i < cantidad; i++) {
+function generateFuturePredictions(quantity = 100) {
+  const points = [];
+  for (let i = 0; i < quantity; i++) {
     const lat = -5 + Math.random() * 0.3;
     const lon = -80.75 + Math.random() * 0.2;
-    const intensidad = Math.random();
-    puntos.push([lat, lon, intensidad]);
+    const intensity = Math.random();
+    points.push([lat, lon, intensity]);
   }
-  return puntos;
+  return points;
 }
 
 /* ===========================
-   BUSCADOR DE LUGARES
+   PLACE SEARCH
 =========================== */
 
 function setupGeocoder(map) {
   const searchContainer = document.createElement('div');
   searchContainer.id = 'geocoder';
   searchContainer.innerHTML = `
-    <input type="text" id="searchInput" placeholder="🔍 Buscar lugar..." />
+    <input type="text" id="searchInput" placeholder="🔍 Search location or coordinates (e.g., -5.2, -80.6)..." />
     <div id="searchResults"></div>
   `;
   document.body.appendChild(searchContainer);
@@ -161,15 +164,47 @@ function setupGeocoder(map) {
       return;
     }
 
+    // Check if input is coordinates format (lat, lon)
+    const coordPattern = /^(-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)$/;
+    const coordMatch = query.match(coordPattern);
+    
+    if (coordMatch) {
+      const lat = parseFloat(coordMatch[1]);
+      const lon = parseFloat(coordMatch[2]);
+      
+      if (lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
+        searchResults.innerHTML = `
+          <div class="search-item coord-result" data-lat="${lat}" data-lon="${lon}">
+            <strong>📍 Coordinates</strong>
+            <br><small>Latitude: ${lat.toFixed(6)}, Longitude: ${lon.toFixed(6)}</small>
+          </div>
+        `;
+        searchResults.style.display = 'block';
+        
+        document.querySelector('.coord-result').addEventListener('click', () => {
+          map.setView([lat, lon], 13);
+          
+          if (searchMarker) map.removeLayer(searchMarker);
+          searchMarker = L.marker([lat, lon]).addTo(map)
+            .bindPopup(`<b>Coordinates</b><br>Lat: ${lat.toFixed(6)}<br>Lon: ${lon.toFixed(6)}`)
+            .openPopup();
+          
+          searchResults.style.display = 'none';
+          createToast('Coordinates found', 'success', 3000);
+        });
+        return;
+      }
+    }
+
     debounceTimer = setTimeout(async () => {
       try {
         const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=pe`
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=pe,ec,co,br,bo,cl,ar,uy,py,ve`
         );
         const results = await response.json();
         
         if (results.length === 0) {
-          searchResults.innerHTML = '<div class="search-item">No se encontraron resultados</div>';
+          searchResults.innerHTML = '<div class="search-item">No results found</div>';
           searchResults.style.display = 'block';
           return;
         }
@@ -198,12 +233,12 @@ function setupGeocoder(map) {
             searchResults.style.display = 'none';
             searchInput.value = item.querySelector('strong').textContent;
             
-            createToast('Ubicación encontrada', 'success', 3000);
+            createToast('Location found', 'success', 3000);
           });
         });
       } catch (error) {
-        console.error('Error en búsqueda:', error);
-        searchResults.innerHTML = '<div class="search-item">Error en la búsqueda</div>';
+        console.error('Search error:', error);
+        searchResults.innerHTML = '<div class="search-item">Search error</div>';
         searchResults.style.display = 'block';
       }
     }, 300);
@@ -217,7 +252,60 @@ function setupGeocoder(map) {
 }
 
 /* ===========================
-   INICIALIZACIÓN
+   FLOATING TABS SYSTEM
+=========================== */
+
+function setupFloatingTabs() {
+  const tabsHTML = `
+    <div id="floatingTabs">
+      <button class="floatTab floatTab-right" data-target="layerPanel" title="Map Layers">
+        <span>LAYERS</span>
+      </button>
+      <button class="floatTab floatTab-right" data-target="fenomenoPane" title="El Niño 2019 Info">
+        <span>EL NIÑO</span>
+      </button>
+      <button class="floatTab floatTab-right" data-target="prediccionPane" title="Predictions">
+        <span>FORECAST</span>
+      </button>
+      <button class="floatTab floatTab-bottom" data-target="animationPanel" title="SST Animation Player">
+        <span>⏯ SST TIMELINE</span>
+      </button>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', tabsHTML);
+
+  document.querySelectorAll('.floatTab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.dataset.target;
+      const targetPanel = document.getElementById(targetId);
+      
+      if (targetPanel) {
+        const isHidden = targetPanel.getAttribute('aria-hidden') === 'true';
+        
+        if (isHidden) {
+          // Open panel
+          targetPanel.setAttribute('aria-hidden', 'false');
+          if (targetId === 'animationPanel') {
+            targetPanel.style.display = 'block';
+          }
+          tab.classList.add('active');
+          createToast(`${tab.title} opened`, 'info', 2000);
+        } else {
+          // Close panel
+          targetPanel.setAttribute('aria-hidden', 'true');
+          if (targetId === 'animationPanel') {
+            targetPanel.style.display = 'none';
+          }
+          tab.classList.remove('active');
+        }
+      }
+    });
+  });
+}
+
+/* ===========================
+   INITIALIZATION
 =========================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -228,8 +316,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const map = L.map('map', {
     zoomSnap: 0.5,
     worldCopyJump: false,
-    maxBounds: [[-30, -90], [10, -60]],
-    maxBoundsViscosity: 0.65,
+    maxBounds: [[-60, -100], [15, -30]], // Expandido para toda Sudamérica
+    maxBoundsViscosity: 0.5, // Menos restrictivo
     minZoom: 3,
     maxZoom: 18
   }).setView([-9.2, -75], 5);
@@ -245,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentDate = today;
 
   /* ===========================
-     CAPAS BASE Y OVERLAYS
+     BASE LAYERS AND OVERLAYS
   =========================== */
 
   const esri = L.tileLayer(
@@ -278,7 +366,23 @@ document.addEventListener('DOMContentLoaded', () => {
     maxZoom: 19
   });
 
-  let heatPiura = L.heatLayer(generarDatosAleatorios(), {
+  // Country borders and city labels overlay
+  let bordersLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap',
+    opacity: 0.5,
+    minZoom: 1,
+    maxZoom: 19
+  });
+
+  // Labels overlay for cities
+  let labelsLayer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.png', {
+    attribution: 'Map tiles by Stamen Design, under CC BY 3.0',
+    opacity: 0.8,
+    minZoom: 1,
+    maxZoom: 19
+  });
+
+  let heatPiura = L.heatLayer(generateRandomData(), {
     radius: 25,
     blur: 15,
     minOpacity: 0.5,
@@ -286,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gradient: { 0.0: 'blue', 0.4: 'cyan', 0.6: 'yellow', 0.8: 'orange', 1.0: 'red' }
   });
 
-  let heatPeru = L.heatLayer(generarDatosAleatorios(), {
+  let heatPeru = L.heatLayer(generateRandomData(), {
     radius: 30,
     blur: 20,
     minOpacity: 0.5,
@@ -294,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gradient: { 0.0: 'blue', 0.4: 'cyan', 0.6: 'yellow', 0.8: 'orange', 1.0: 'red' }
   });
 
-  let heatFuturo = L.heatLayer(generarPrediccionesFuturas(), {
+  let heatFuture = L.heatLayer(generateFuturePredictions(), {
     radius: 25,
     blur: 15,
     minOpacity: 0.5,
@@ -303,23 +407,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ===========================
-     PANEL DE CAPAS
+     LAYERS PANEL
   =========================== */
 
   const layerPanel = document.getElementById('layerPanel');
   const layerList = document.getElementById('layerList');
   const closePanel = document.getElementById('closePanel');
-  const togglePanel = document.getElementById('togglePanel');
   const resetLayers = document.getElementById('resetLayers');
 
   const layersConfig = [
     { name: 'Esri World Imagery', layer: esri, defaultOn: true, locked: true },
-    { name: 'Anomalías SST (El Niño)', layer: sstLayer, defaultOn: false, special: 'sst' },
-    { name: 'Lluvia IMERG', layer: imergLayer, defaultOn: false },
-    { name: 'Calles OSM', layer: streetLayer, defaultOn: false },
-    { name: 'Mapa calor Piura', layer: heatPiura, defaultOn: false },
-    { name: 'Mapa calor Perú', layer: heatPeru, defaultOn: false },
-    { name: 'Predicción inundaciones', layer: heatFuturo, defaultOn: false }
+    { name: 'SST Anomalies (El Niño)', layer: sstLayer, defaultOn: false, special: 'sst' },
+    { name: 'IMERG Rainfall', layer: imergLayer, defaultOn: false },
+    { name: 'Country Borders & Cities', layer: labelsLayer, defaultOn: false },
+    { name: 'OSM Streets', layer: streetLayer, defaultOn: false },
+    { name: 'Piura Heatmap', layer: heatPiura, defaultOn: false },
+    { name: 'Peru Heatmap', layer: heatPeru, defaultOn: false },
+    { name: 'Flood Prediction', layer: heatFuture, defaultOn: false }
   ];
 
   function createLayerControls() {
@@ -348,8 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.checked) {
           cfg.layer.addTo(map);
           if (cfg.special === 'sst') {
-            mostrarAnalisisNino();
-            createToast('SST Anomalies activado', 'info', 3000);
+            createToast('SST Anomalies layer activated', 'info', 3000);
           }
         } else {
           map.removeLayer(cfg.layer);
@@ -360,27 +463,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   createLayerControls();
 
-  function mostrarAnalisisNino() {
-    const fenomenoPane = document.getElementById('fenomenoPane');
-    if (fenomenoPane && fenomenoPane.style.display !== 'block') {
-      document.querySelectorAll('.tabContent').forEach(t => t.style.display = 'none');
-      fenomenoPane.style.display = 'block';
-      document.querySelectorAll('.tabBtn').forEach(b => b.classList.remove('active'));
-      const ninoBtn = document.querySelector('.tabBtn[data-tab="fenomenoPane"]');
-      if (ninoBtn) ninoBtn.classList.add('active');
-    }
-  }
-
-  if (togglePanel) {
-    togglePanel.addEventListener('click', () => {
-      const hidden = layerPanel.getAttribute('aria-hidden') === 'true';
-      layerPanel.setAttribute('aria-hidden', hidden ? 'false' : 'true');
-    });
-  }
-
   if (closePanel) {
     closePanel.addEventListener('click', () => {
       layerPanel.setAttribute('aria-hidden', 'true');
+      document.querySelector('[data-target="layerPanel"]').classList.remove('active');
     });
   }
 
@@ -397,11 +483,11 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       });
-      createToast('Capas reseteadas', 'success', 3000);
+      createToast('Layers reset', 'success', 3000);
     });
   }
 
-  // Panel arrastrable
+  // Draggable panel
   let isDragging = false;
   let offsetX, offsetY;
 
@@ -426,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ===========================
-     NAVEGACIÓN
+     NAVIGATION
   =========================== */
 
   const fitPeruBtn = document.getElementById('fitPeru');
@@ -445,11 +531,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ===========================
-     PREDICCIÓN POR ZONA
+     ZONE PREDICTION
   =========================== */
 
-  let prediccionMarker = null;
-  let prediccionPanel = null;
+  let predictionMarker = null;
+  let predictionPanel = null;
 
   map.on('click', function (e) {
     const lat = e.latlng.lat;
@@ -460,34 +546,34 @@ document.addEventListener('DOMContentLoaded', () => {
       coordsEl.innerHTML = `Lat: <strong>${lat.toFixed(6)}</strong>, Lon: <strong>${lon.toFixed(6)}</strong>`;
     }
 
-    let zonaEncontrada = null;
-    for (let key in zonasRiesgo) {
-      const zona = zonasRiesgo[key];
-      const [[minLat, minLon], [maxLat, maxLon]] = zona.bounds;
+    let foundZone = null;
+    for (let key in riskZones) {
+      const zone = riskZones[key];
+      const [[minLat, minLon], [maxLat, maxLon]] = zone.bounds;
       if (lat >= minLat && lat <= maxLat && lon >= minLon && lon <= maxLon) {
-        zonaEncontrada = zona;
+        foundZone = zone;
         break;
       }
     }
 
-    if (zonaEncontrada) {
-      mostrarPrediccion(zonaEncontrada, lat, lon);
+    if (foundZone) {
+      showPrediction(foundZone, lat, lon);
     } else {
-      if (prediccionPanel) {
-        prediccionPanel.remove();
-        prediccionPanel = null;
+      if (predictionPanel) {
+        predictionPanel.remove();
+        predictionPanel = null;
       }
     }
 
-    if (prediccionMarker) map.removeLayer(prediccionMarker);
-    prediccionMarker = L.marker([lat, lon]).addTo(map);
+    if (predictionMarker) map.removeLayer(predictionMarker);
+    predictionMarker = L.marker([lat, lon]).addTo(map);
   });
 
-  function mostrarPrediccion(zona, lat, lon) {
-    if (prediccionPanel) prediccionPanel.remove();
+  function showPrediction(zone, lat, lon) {
+    if (predictionPanel) predictionPanel.remove();
 
-    prediccionPanel = document.createElement('div');
-    prediccionPanel.style.cssText = `
+    predictionPanel = document.createElement('div');
+    predictionPanel.style.cssText = `
       position: absolute;
       bottom: 120px;
       left: 50%;
@@ -503,44 +589,44 @@ document.addEventListener('DOMContentLoaded', () => {
       font-size: 14px;
     `;
 
-    const riesgoColor = zona.riesgo.includes('ALTO') ? '#e74c3c' : zona.riesgo.includes('MODERADO') ? '#f39c12' : '#27ae60';
+    const riskColor = zone.risk.includes('HIGH') ? '#e74c3c' : zone.risk.includes('MODERATE') ? '#f39c12' : '#27ae60';
 
-    prediccionPanel.innerHTML = `
+    predictionPanel.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3 style="margin: 0; color: ${riesgoColor};">Predicción: ${zona.name}</h3>
+        <h3 style="margin: 0; color: ${riskColor};">Prediction: ${zone.name}</h3>
         <button id="closePred" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #999;">×</button>
       </div>
-      <div style="background: ${riesgoColor}22; padding: 8px 12px; border-radius: 6px; margin-bottom: 10px;">
-        <strong>Nivel de Riesgo:</strong> <span style="color: ${riesgoColor}; font-weight: 700;">${zona.riesgo}</span>
+      <div style="background: ${riskColor}22; padding: 8px 12px; border-radius: 6px; margin-bottom: 10px;">
+        <strong>Risk Level:</strong> <span style="color: ${riskColor}; font-weight: 700;">${zone.risk}</span>
         <br>
-        <strong>Probabilidad:</strong> ${zona.probabilidad}%
+        <strong>Probability:</strong> ${zone.probability}%
       </div>
       <div style="margin-bottom: 10px;">
-        <strong>Precipitación esperada:</strong> ${zona.precipitacion}
+        <strong>Expected precipitation:</strong> ${zone.precipitation}
       </div>
       <div>
-        <strong>Recomendaciones:</strong>
+        <strong>Recommendations:</strong>
         <ul style="margin: 8px 0 0 0; padding-left: 20px;">
-          ${zona.recomendaciones.map(r => `<li style="margin: 4px 0;">${r}</li>`).join('')}
+          ${zone.recommendations.map(r => `<li style="margin: 4px 0;">${r}</li>`).join('')}
         </ul>
       </div>
       <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd; font-size: 12px; color: #666;">
-        Coordenadas: ${lat.toFixed(4)}, ${lon.toFixed(4)}
+        Coordinates: ${lat.toFixed(4)}, ${lon.toFixed(4)}
       </div>
     `;
 
-    document.body.appendChild(prediccionPanel);
+    document.body.appendChild(predictionPanel);
 
     document.getElementById('closePred').addEventListener('click', () => {
-      prediccionPanel.remove();
-      prediccionPanel = null;
+      predictionPanel.remove();
+      predictionPanel = null;
     });
 
-    createToast(`Predicción generada para ${zona.name}`, 'success', 3000);
+    createToast(`Prediction generated for ${zone.name}`, 'success', 3000);
   }
 
   /* ===========================
-     ANIMACIÓN TEMPORAL SST
+     SST TEMPORAL ANIMATION
   =========================== */
 
   let animationState = {
@@ -572,40 +658,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const animPanel = document.createElement('div');
     animPanel.id = 'animationPanel';
     animPanel.setAttribute('data-minimized', 'false');
+    animPanel.setAttribute('aria-hidden', 'true');
+    animPanel.style.display = 'none';
     animPanel.innerHTML = `
       <div class="animPanelHeader" id="animDragHandle">
-        <strong>Animación Temporal SST</strong>
+        <strong>SST Temporal Animation</strong>
         <div class="animHeaderButtons">
-          <button id="minimizeAnim" class="headerBtn" title="Minimizar">−</button>
-          <button id="closeAnim" class="headerBtn" title="Cerrar">×</button>
+          <button id="minimizeAnim" class="headerBtn" title="Minimize">−</button>
+          <button id="closeAnim" class="headerBtn" title="Close">×</button>
         </div>
       </div>
       <div id="animContent" class="animControls">
         <div class="dateRange">
-          <label>Desde:</label>
+          <label>From:</label>
           <input type="date" id="animStartDate" value="${getDateDaysAgo(30)}" />
-          <label>Hasta:</label>
+          <label>To:</label>
           <input type="date" id="animEndDate" value="${today}" />
         </div>
         <div class="playControls">
-          <button id="playBtn" class="animBtn">▶ Reproducir</button>
-          <button id="pauseBtn" class="animBtn" style="display:none;">⏸ Pausar</button>
-          <button id="stopBtn" class="animBtn">⏹ Detener</button>
+          <button id="playBtn" class="animBtn">▶ Play</button>
+          <button id="pauseBtn" class="animBtn" style="display:none;">⏸ Pause</button>
+          <button id="stopBtn" class="animBtn">⏹ Stop</button>
         </div>
         <div class="speedControl">
-          <label>Velocidad:</label>
+          <label>Speed:</label>
           <select id="speedSelect">
-            <option value="2000">Lenta (2s)</option>
+            <option value="2000">Slow (2s)</option>
             <option value="1000" selected>Normal (1s)</option>
-            <option value="500">Rápida (0.5s)</option>
-            <option value="250">Muy rápida (0.25s)</option>
+            <option value="500">Fast (0.5s)</option>
+            <option value="250">Very Fast (0.25s)</option>
           </select>
         </div>
         <div class="progressContainer">
           <div class="progressBar">
             <div id="progressFill" class="progressFill"></div>
           </div>
-          <div id="currentDateDisplay" class="currentDateDisplay">Fecha: ${today}</div>
+          <div id="currentDateDisplay" class="currentDateDisplay">Date: ${today}</div>
         </div>
       </div>
     `;
@@ -659,7 +747,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close
     document.getElementById('closeAnim').addEventListener('click', () => {
       stopAnimation();
+      animPanel.setAttribute('aria-hidden', 'true');
       animPanel.style.display = 'none';
+      document.querySelector('[data-target="animationPanel"]').classList.remove('active');
     });
 
     // Event listeners
@@ -680,12 +770,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const endDate = document.getElementById('animEndDate').value;
     
     if (!startDate || !endDate) {
-      createToast('Selecciona rango de fechas válido', 'error', 3000);
+      createToast('Select valid date range', 'error', 3000);
       return;
     }
 
     if (new Date(startDate) > new Date(endDate)) {
-      createToast('La fecha inicial debe ser anterior a la final', 'error', 3000);
+      createToast('Start date must be before end date', 'error', 3000);
       return;
     }
 
@@ -700,10 +790,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sstCheckbox && !sstCheckbox.checked) {
       sstCheckbox.checked = true;
       sstLayer.addTo(map);
-      createToast('Capa SST activada', 'info', 2000);
+      createToast('SST layer activated', 'info', 2000);
     }
 
-    createToast(`Animación: ${animationState.dates.length} días`, 'success', 3000);
+    createToast(`Animation: ${animationState.dates.length} days`, 'success', 3000);
     playNextFrame();
   }
 
@@ -715,20 +805,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const currentDate = animationState.dates[animationState.currentIndex];
     
-    if (map.hasLayer(sstLayer)) map.removeLayer(sstLayer);
-    
-    sstLayer = L.tileLayer(sstAnomalyTemplate(currentDate), {
+    // Create new layer with fade-in transition
+    const newSstLayer = L.tileLayer(sstAnomalyTemplate(currentDate), {
       ...commonOptions,
       maxZoom: 12,
-      opacity: 0.75,
-      attribution: "NASA GHRSST — SST Anomalies (MUR L4)"
-    }).addTo(map);
+      opacity: 0,
+      attribution: "NASA GHRSST — SST Anomalies (MUR L4)",
+      className: 'sst-transition'
+    });
 
-    layersConfig[1].layer = sstLayer;
+    // Add new layer first
+    newSstLayer.addTo(map);
+
+    // Wait for tiles to load, then fade in
+    newSstLayer.once('load', () => {
+      // Fade in new layer
+      let opacity = 0;
+      const fadeInterval = setInterval(() => {
+        opacity += 0.15;
+        if (opacity >= 0.75) {
+          opacity = 0.75;
+          clearInterval(fadeInterval);
+          // Remove old layer after fade completes
+          if (map.hasLayer(sstLayer)) map.removeLayer(sstLayer);
+          sstLayer = newSstLayer;
+          layersConfig[1].layer = sstLayer;
+        }
+        newSstLayer.setOpacity(opacity);
+      }, 30);
+    });
+
+    // Timeout fallback in case tiles don't load
+    setTimeout(() => {
+      if (newSstLayer.options.opacity < 0.75) {
+        newSstLayer.setOpacity(0.75);
+        if (map.hasLayer(sstLayer)) map.removeLayer(sstLayer);
+        sstLayer = newSstLayer;
+        layersConfig[1].layer = sstLayer;
+      }
+    }, 1000);
 
     const progress = ((animationState.currentIndex + 1) / animationState.dates.length) * 100;
     document.getElementById('progressFill').style.width = progress + '%';
-    document.getElementById('currentDateDisplay').textContent = `Fecha: ${currentDate} (${animationState.currentIndex + 1}/${animationState.dates.length})`;
+    document.getElementById('currentDateDisplay').textContent = `Date: ${currentDate} (${animationState.currentIndex + 1}/${animationState.dates.length})`;
     
     if (dateInput) dateInput.value = currentDate;
 
@@ -741,7 +860,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (animationState.interval) clearTimeout(animationState.interval);
     document.getElementById('playBtn').style.display = 'inline-block';
     document.getElementById('pauseBtn').style.display = 'none';
-    createToast('Animación pausada', 'info', 2000);
+    createToast('Animation paused', 'info', 2000);
   }
 
   function stopAnimation() {
@@ -753,12 +872,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('progressFill').style.width = '0%';
     
     if (animationState.dates.length > 0) {
-      createToast('Animación detenida', 'info', 2000);
+      createToast('Animation stopped', 'info', 2000);
     }
   }
 
   /* ===========================
-     APLICAR FECHA
+     APPLY DATE
   =========================== */
 
   const goDateBtn = document.getElementById('goDate');
@@ -766,7 +885,7 @@ document.addEventListener('DOMContentLoaded', () => {
     goDateBtn.addEventListener('click', () => {
       const d = dateInput ? dateInput.value : null;
       if (!d) {
-        alert('Elige una fecha.');
+        alert('Choose a date.');
         return;
       }
 
@@ -798,21 +917,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (checkbox1 && checkbox1.checked) sstLayer.addTo(map);
       if (checkbox2 && checkbox2.checked) imergLayer.addTo(map);
 
-      heatPiura.setLatLngs(generarDatosAleatorios());
-      heatPeru.setLatLngs(generarDatosAleatorios());
-      heatFuturo.setLatLngs(generarPrediccionesFuturas());
+      heatPiura.setLatLngs(generateRandomData());
+      heatPeru.setLatLngs(generateRandomData());
+      heatFuture.setLatLngs(generateFuturePredictions());
 
       const layerInfoEl = document.getElementById('layerInfo');
       if (layerInfoEl) {
-        layerInfoEl.innerText = `Fecha actualizada: ${currentDate}`;
+        layerInfoEl.innerText = `Date updated: ${currentDate}`;
       }
 
-      createToast(`Fecha actualizada a ${currentDate}`, 'success', 3000);
+      createToast(`Date updated to ${currentDate}`, 'success', 3000);
     });
   }
 
   /* ===========================
-     PESTAÑAS
+     TABS
   =========================== */
 
   const tabBtns = document.querySelectorAll('.tabBtn');
@@ -822,29 +941,42 @@ document.addEventListener('DOMContentLoaded', () => {
       const tab = document.getElementById(tabId);
       if (!tab) return;
 
-      if (tab.style.display === 'block') {
-        tab.style.display = 'none';
-        btn.classList.remove('active');
-      } else {
-        document.querySelectorAll('.tabContent').forEach(t => t.style.display = 'none');
-        document.querySelectorAll('.tabBtn').forEach(b => b.classList.remove('active'));
+      const isVisible = tab.style.display === 'block';
+      
+      document.querySelectorAll('.tabContent').forEach(t => t.style.display = 'none');
+      document.querySelectorAll('.tabBtn').forEach(b => b.classList.remove('active'));
+      
+      if (!isVisible) {
         tab.style.display = 'block';
         btn.classList.add('active');
       }
     });
   });
 
+  // Close buttons for tab content
+  document.querySelectorAll('.tabContent').forEach(pane => {
+    pane.addEventListener('click', (e) => {
+      if (e.target.classList.contains('closeTabContent')) {
+        pane.style.display = 'none';
+        const tabBtn = document.querySelector(`[data-tab="${pane.id}"]`);
+        if (tabBtn) tabBtn.classList.remove('active');
+        const floatTab = document.querySelector(`[data-target="${pane.id}"]`);
+        if (floatTab) floatTab.classList.remove('active');
+      }
+    });
+  });
+
   /* ===========================
-     GRÁFICOS
+     CHARTS
   =========================== */
 
   try {
     new Chart(document.getElementById('rainChart').getContext('2d'), {
       type: 'bar',
       data: {
-        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [{
-          label: 'Precipitación (mm)',
+          label: 'Precipitation (mm)',
           data: [120, 180, 420, 200, 80, 40],
           backgroundColor: 'rgba(54, 162, 235, 0.6)',
           borderColor: 'rgba(54, 162, 235, 1)',
@@ -855,22 +987,22 @@ document.addEventListener('DOMContentLoaded', () => {
         responsive: false,
         scales: {
           y: { beginAtZero: true, title: { display: true, text: 'mm' } },
-          x: { title: { display: true, text: 'Meses' } }
+          x: { title: { display: true, text: 'Months' } }
         },
         plugins: { legend: { display: false } }
       }
     });
   } catch (e) {
-    console.warn('rainChart no disponible', e);
+    console.warn('rainChart not available', e);
   }
 
   try {
     new Chart(document.getElementById('cropChart').getContext('2d'), {
       type: 'pie',
       data: {
-        labels: ['Arroz', 'Maíz', 'Algodón'],
+        labels: ['Rice', 'Corn', 'Cotton'],
         datasets: [{
-          label: 'Reducción (%)',
+          label: 'Reduction (%)',
           data: [35, 25, 20],
           backgroundColor: [
             'rgba(255, 99, 132, 0.6)',
@@ -885,20 +1017,34 @@ document.addEventListener('DOMContentLoaded', () => {
         responsive: false,
         plugins: {
           legend: { position: 'bottom' },
-          title: { display: true, text: 'Impacto en cultivos' }
+          title: { display: true, text: 'Crop Impact' }
         }
       }
     });
   } catch (e) {
-    console.warn('cropChart no disponible', e);
+    console.warn('cropChart not available', e);
   }
 
   setupGeocoder(map);
   setupAnimationControls();
+  setupFloatingTabs();
+
+  // Initial tutorial
+  const tutorial = document.getElementById('initialTutorial');
+  const closeTutorialBtn = document.getElementById('closeTutorial');
+  
+  if (closeTutorialBtn) {
+    closeTutorialBtn.addEventListener('click', () => {
+      tutorial.style.animation = 'fadeOut 0.3s ease';
+      setTimeout(() => {
+        tutorial.remove();
+      }, 300);
+    });
+  }
 
   map.fitBounds(peruBounds, { padding: [20, 20] });
   L.control.scale().addTo(map);
 
-  createToast('Mapa cargado correctamente', 'success', 4000);
+  createToast('Map loaded successfully. Use side tabs to open panels.', 'success', 5000);
 
 });
