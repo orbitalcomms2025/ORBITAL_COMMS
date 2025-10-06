@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Innovation – Piura 2017 | Orbital Comms Stories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/stories.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>Community Innovation – Piura 2017</h1>
+  </div>
+  <nav>
+    <a href="../static/stories.html">Back to Stories</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="hero" class="story-block">
+  <div class="hero-content">
+    <h1>Solidarity That Saved Lives</h1>
+    <img src="../assets/images/story5.jpg" alt="Volunteers and community rescue in Piura 2017">
+  </div>
+</section>
+
+<!-- STORY CONTENT -->
+<section class="story-content story-block">
+  <p>
+    During the Coastal Niño emergency in March 2017, local communities in Piura showed remarkable organizational capacity. 
+    Volunteers improvised rescue boats, built safe paths, and distributed food, water, and medicine to isolated families.
+  </p>
+
+  <p class="highlight">
+    “If we hadn’t helped each other, many of us wouldn’t have survived,” recounted a volunteer neighbor.
+  </p>
+
+  <h2>Key Actions</h2>
+  <ul>
+    <li>Creation of improvised routes to access flooded areas.</li>
+    <li>Use of boats and vehicles to rescue trapped families.</li>
+    <li>Distribution of food, drinking water, and medicine to isolated communities.</li>
+    <li>Organization of temporary shelters for affected families.</li>
+  </ul>
+
+  <h2>Impact</h2>
+  <p>
+    The local initiative allowed hundreds of families to receive immediate aid before authorities could provide official support. 
+    Solidarity and cooperation were fundamental in reducing the disaster’s impact.
+  </p>
+
+  <h2>Lessons Learned</h2>
+  <p>
+    1. Community organization can save lives during emergencies.<br>
+    2. Local training and preparedness are key to rapid response.<br>
+    3. Solidarity strengthens resilience against natural disasters.
+  </p>
+
+  <p class="sources">
+    <i>
+      Sources: RPP – “Volunteers Help Coastal Niño Victims in Piura” • 
+      El Comercio – “Solidarity Emerged After the 2017 Floods”.
+    </i>
+  </p>
+</section>
+
+<!-- NAVIGATION -->
+<div class="story-nav">
+  <button id="prevStory">Previous Story</button>
+  <button id="nextStory">Next Story</button>
+</div>
+
+<footer>
+  &copy; 2025 Orbital Comms Stories
+</footer>
+
+<script>
+  // ================= APPEAR ANIMATION =================
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.story-block').forEach(el => el.classList.add('visible'));
+  });
+
+  // ================= STORY NAVIGATION =================
+  const prev = document.getElementById('prevStory');
+  const next = document.getElementById('nextStory');
+  prev.addEventListener('click', () => { window.location.href = 'story4.html'; });
+  next.addEventListener('click', () => { window.location.href = 'story6.html'; });
+</script>
+
+</body>
+</html>

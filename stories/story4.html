@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Loss – Piura 2017 | Orbital Comms Stories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/stories.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>Crop Loss – Piura 2017</h1>
+  </div>
+  <nav>
+    <a href="../static/stories.html">Back to Stories</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="hero" class="story-block">
+  <div class="hero-content">
+    <h1>The Agricultural Impact of Coastal Niño</h1>
+    <img src="../assets/images/story4.jpg" alt="Flooded fields and crop loss in Piura 2017">
+  </div>
+</section>
+
+<!-- STORY CONTENT -->
+<section class="story-content story-block">
+  <p>
+    During the March 2017 floods, Piura suffered one of the worst agricultural crises in its recent history. 
+    Rice, corn, and banana fields were completely submerged, destroying the livelihoods of thousands of small farmers.
+  </p>
+
+  <p class="highlight">
+    “What we planted with so much effort disappeared under the water. Now we have neither food nor money to survive,” said one affected farmer.
+  </p>
+
+  <h2>Consequences</h2>
+  <ul>
+    <li>More than <b>5,000 hectares</b> of crops lost.</li>
+    <li>Thousands of families left without income or food security.</li>
+    <li>Severe economic impact on the region, with losses estimated in millions of soles.</li>
+    <li>Food shortages and rising local prices.</li>
+  </ul>
+
+  <h2>Relief and Assistance</h2>
+  <p>
+    Local organizations and NGOs distributed seeds, food, and tools to help farmers recover. 
+    However, the scale of destruction made immediate field restoration difficult.
+  </p>
+
+  <h2>Lessons Learned</h2>
+  <p>
+    1. Agriculture requires proper prevention and drainage systems.<br>
+    2. It is vital to have crop insurance and prompt government aid.<br>
+    3. Community resilience is key to overcoming natural disasters.
+  </p>
+
+  <p class="sources">
+    <i>
+      Sources: RPP – “Farmers in Piura Lose Crops After Floods” • 
+      El Comercio – “Agricultural Crisis from Coastal Niño in Piura”.
+    </i>
+  </p>
+</section>
+
+<!-- NAVIGATION -->
+<div class="story-nav">
+  <button id="prevStory">Previous Story</button>
+  <button id="nextStory">Next Story</button>
+</div>
+
+<footer>
+  &copy; 2025 Orbital Comms Stories
+</footer>
+
+<script>
+  // ================= APPEAR ANIMATION =================
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.story-block').forEach(el => el.classList.add('visible'));
+  });
+
+  // ================= STORY NAVIGATION =================
+  const prev = document.getElementById('prevStory');
+  const next = document.getElementById('nextStory');
+  prev.addEventListener('click', () => { window.location.href = 'story3.html'; });
+  next.addEventListener('click', () => { window.location.href = 'story5.html'; });
+</script>
+
+</body>
+</html>

@@ -13,7 +13,6 @@
   <meta name="theme-color" content="#00FFEA"> 
 </head>
 
-
 <body>
 
 <header id="header">
@@ -29,9 +28,6 @@
     <a href="#hero">Home</a>
     <a href="./static/mission.html">Mission</a>
     <a href="./static/stories.html">Stories</a>
-    <a href="#prepare">Prepare</a>
-    <a href="./static/alerts.html">Alerts</a>
-    <a href="./static/rutas.html">Rutas & Construcción</a>
   </nav>
 </header>
 
@@ -46,6 +42,7 @@
       Real-time information on natural disasters for effective response and preparedness. Stay informed, stay safe.
     </p>
     <a href="#" class="cta-button" id="openLogin">Start</a>
+    <div id="welcomeMessage" class="welcome-message"></div>
   </div>
 </section>
 
@@ -69,30 +66,6 @@
   </div>
 </div>
 
-<div id="surveyContainer">
-  <h2>📝 Disaster Impact Survey</h2>
-  <form id="surveyForm">
-    <input type="text" id="surveyName" placeholder="Name" required>
-    <input type="email" id="surveyEmail" placeholder="Email" required>
-    <input type="text" id="city" placeholder="City">
-    <input type="number" id="age" placeholder="Age">
-    <select id="gender">
-      <option value="">Select Gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-    </select>
-    <input type="text" id="type_of_impact" placeholder="Type of impact">
-    <input type="text" id="damage_to_housing" placeholder="Damage to housing">
-    <input type="text" id="loss_of_crops" placeholder="Loss of crops">
-    <input type="text" id="loss_of_property" placeholder="Loss of property">
-    <input type="text" id="health_affected" placeholder="Health affected">
-    <textarea id="experience" placeholder="Tell me about your experience"></textarea>
-    <button type="submit">Submit Survey</button>
-  </form>
-  <div id="surveyMessage" class="message"></div>
-</div>
-
 <section id="mission">
   <h2>How Orbital Comms Helps You</h2>
   <div class="cards">
@@ -110,11 +83,6 @@
       <img src="./assets/images/Real-time Alerts.jpg" alt="Real-time Alerts">
       <h3>Real-time Alerts</h3>
       <p>Receive instant notifications about floods, earthquakes, and more.</p>
-    </a>
-    <a href="./static/guides.html" class="card story-block">
-      <img src="./assets/images/emergency guides.png" alt="Emergency Guides">
-      <h3>Emergency Guides</h3>
-      <p>Step-by-step instructions to prepare your home and family.</p>
     </a>
   </div>
 </section>
@@ -157,30 +125,33 @@
   </div>
 </section>
 
-<section id="prepare">
-  <h2>Prepare Yourself</h2>
-  <div class="cards">
-    <div class="card story-block">
-      <img src="./assets/images/Emergency Kit.png" alt="Emergency Kit">
-      <h3>Emergency Kit</h3>
-      <p>Include food, water, first aid, and essential documents.</p>
-    </div>
-    <div class="card story-block">
-      <img src="./assets/images/evacuation plan.jpg" alt="Evacuation Plan">
-      <h3>Evacuation Plan</h3>
-      <p>Know your safest routes and meeting points for your family.</p>
-    </div>
-    <div class="card story-block">
-      <img src="./assets/images/Stay Alert.jpg" alt="Stay Alert">
-      <h3>Stay Alert</h3>
-      <p>Subscribe to alerts and follow real-time updates.</p>
-    </div>
-  </div>
-</section>
-
 <button id="backToTop">
   <img src="./assets/images/flechita.png" alt="Back to Top">
 </button>
+
+<div id="surveyContainer">
+  <h2>Disaster Impact Survey</h2>
+  <form id="surveyForm">
+    <input type="text" id="surveyName" placeholder="Name" required>
+    <input type="email" id="surveyEmail" placeholder="Email" required>
+    <input type="text" id="city" placeholder="City">
+    <input type="number" id="age" placeholder="Age">
+    <select id="gender">
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+    <input type="text" id="type_of_impact" placeholder="Type of impact">
+    <input type="text" id="damage_to_housing" placeholder="Damage to housing">
+    <input type="text" id="loss_of_crops" placeholder="Loss of crops">
+    <input type="text" id="loss_of_property" placeholder="Loss of property">
+    <input type="text" id="health_affected" placeholder="Health affected">
+    <textarea id="experience" placeholder="Tell me about your experience"></textarea>
+    <button type="submit">Submit Survey</button>
+  </form>
+  <div id="surveyMessage" class="message"></div>
+</div>
 
 <footer>
   <p>&copy; 2025 Orbital Comms. All rights reserved.</p>

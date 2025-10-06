@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Displaced Families – 2017 | Orbital Comms Stories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/stories.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>Displaced Families – 2017</h1>
+  </div>
+  <nav>
+    <a href="../static/stories.html">Back to Stories</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="hero" class="story-block">
+  <div class="hero-content">
+    <h1>Desert Shelters</h1>
+    <img src="../assets/images/story2.jpg" alt="Displaced families in Piura 2017">
+  </div>
+</section>
+
+<!-- STORY CONTENT -->
+<section class="story-content story-block">
+  <p>
+    After the floods in March 2017, around <b>2,000 families</b> in Piura had to leave their homes. 
+    Many moved to desert areas near the Piura–Chiclayo road, building improvised shelters 
+    with limited materials and without basic services such as water, electricity, or sanitation.
+  </p>
+
+  <p class="highlight">
+    “The heat and lack of infrastructure made every day a challenge to survive.”
+  </p>
+
+  <h2>Living Conditions</h2>
+  <ul>
+    <li>Improvised shelters made of wood, plastic, and cardboard.</li>
+    <li>Limited access to drinking water and food.</li>
+    <li>Scarce medical and educational assistance.</li>
+    <li>Entire families sharing very small spaces.</li>
+  </ul>
+
+  <h2>Resilience and Organization</h2>
+  <p>
+    Despite the difficulties, the displaced communities organized to share food, 
+    build improvised paths, and protect children and the elderly. 
+    Solidarity among neighbors was key to surviving for weeks until receiving help from authorities and volunteers.
+  </p>
+
+  <p class="sources">
+    <i>
+      Sources: RPP – “Families affected by Piura floods move to the desert” • 
+      El Comercio – “Coastal Niño: the drama of displaced families in Piura”.
+    </i>
+  </p>
+</section>
+
+<!-- NAVIGATION -->
+<div class="story-nav">
+  <button id="prevStory">Previous Story</button>
+  <button id="nextStory">Next Story</button>
+</div>
+
+<footer>
+  &copy; 2025 Orbital Comms Stories
+</footer>
+
+<script>
+  // ================= APPEAR ANIMATION =================
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.story-block').forEach(el => el.classList.add('visible'));
+  });
+
+  // ================= STORY NAVIGATION =================
+  const prev = document.getElementById('prevStory');
+  const next = document.getElementById('nextStory');
+  prev.addEventListener('click', () => { window.location.href = 'story1.html'; });
+  next.addEventListener('click', () => { window.location.href = 'story3.html'; });
+</script>
+
+</body>
+</html>

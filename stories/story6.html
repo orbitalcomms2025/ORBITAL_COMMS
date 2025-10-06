@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mass Displacement – Piura 2017 | Orbital Comms Stories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/stories.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>Mass Displacement – Piura 2017</h1>
+  </div>
+  <nav>
+    <a href="../static/stories.html">Back to Stories</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="hero" class="story-block">
+  <div class="hero-content">
+    <h1>When Thousands Had to Leave Their Homes</h1>
+    <img src="../assets/images/story6.jpg" alt="Mass displacement in Piura 2017">
+  </div>
+</section>
+
+<!-- STORY CONTENT -->
+<section class="story-content story-block">
+  <p>
+    In 2017, following the floods caused by the Coastal Niño, nearly <b>300,000 people</b> in northern Peru were displaced. 
+    Entire families lost their homes and farmland, having to leave agriculture behind and move to temporary areas without basic services.
+  </p>
+
+  <p class="highlight">
+    “We had to leave our land and adapt to living in improvised shelters, without water or electricity,” recounted an affected farmer.
+  </p>
+
+  <h2>Living Conditions</h2>
+  <ul>
+    <li>Improvised shelters made of wood, plastic, and cardboard.</li>
+    <li>Limited access to drinking water, food, and medical care.</li>
+    <li>Families living in cramped and precarious spaces.</li>
+    <li>Total interruption of agricultural activities and loss of income.</li>
+  </ul>
+
+  <h2>Resilience and Solidarity</h2>
+  <p>
+    Despite the difficulties, many communities organized to share resources, build improvised paths, and protect children and the elderly. 
+    Solidarity among neighbors was key to surviving until help arrived from authorities and volunteers.
+  </p>
+
+  <p class="sources">
+    <i>
+      Sources: RPP – “Thousands displaced by floods in Piura” • 
+      El Comercio – “The Drama of Mass Displacement after the 2017 Coastal Niño”.
+    </i>
+  </p>
+</section>
+
+<!-- NAVIGATION -->
+<div class="story-nav">
+  <button id="prevStory">Previous Story</button>
+  <button id="nextStory">Next Story</button>
+</div>
+
+<footer>
+  &copy; 2025 Orbital Comms Stories
+</footer>
+
+<script>
+  // ================= APPEAR ANIMATION =================
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.story-block').forEach(el => el.classList.add('visible'));
+  });
+
+  // ================= STORY NAVIGATION =================
+  const prev = document.getElementById('prevStory');
+  const next = document.getElementById('nextStory');
+  prev.addEventListener('click', () => { window.location.href = 'story5.html'; });
+  next.addEventListener('click', () => { window.location.href = 'story1.html'; });
+</script>
+
+</body>
+</html>
