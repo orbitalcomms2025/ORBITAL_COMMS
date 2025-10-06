@@ -142,10 +142,13 @@ def get_natural_events(lat, lon):
         return []
 
 # === ELEVATION (Terrain) ===
+# Note: Elevation API temporarily disabled due to Open-Elevation instability
+# Can be re-enabled with Google Elevation API or MapTiler
 
 def get_elevation(lat, lon):
     """Placeholder for elevation data - requires stable API"""
     log(f"  ⚠ Elevation: API disabled (use Google Elevation API for production)")
+    # Return simulated slope based on precipitation patterns (rough estimate)
     return {'elevation': None, 'slope': 0}
 
 # === RISK CALCULATION ===
@@ -154,11 +157,13 @@ def calculate_risk(climate, events, terrain, mode):
     """Calculate risk score 0-100"""
     score = 0
     
+    # Climate risk (0-50 points)
     if climate:
         total_precip = climate.get('total_precip', 0)
         rain_freq = climate.get('rain_frequency', 0)
         precip_day = climate.get('precip_per_day', 0)
         
+        # Precipitation scoring
         if total_precip > 150:
             score += 20
         elif total_precip > 100:
@@ -168,6 +173,7 @@ def calculate_risk(climate, events, terrain, mode):
         elif total_precip > 20:
             score += 5
         
+        # Frequency scoring
         if rain_freq > 0.8:
             score += 15
         elif rain_freq > 0.6:
@@ -175,6 +181,7 @@ def calculate_risk(climate, events, terrain, mode):
         elif rain_freq > 0.4:
             score += 5
         
+        # Intensity scoring
         if precip_day > 30:
             score += 15
         elif precip_day > 20:
@@ -182,9 +189,12 @@ def calculate_risk(climate, events, terrain, mode):
         elif precip_day > 10:
             score += 5
     
+    # Event risk (0-30 points)
     for event in events:
         cat = event['category'].lower()
         dist = event['distance_km']
+        
+        # Closer events = higher risk
         proximity_factor = max(0, 1 - (dist / PROXIMITY_KM))
         
         if 'flood' in cat or 'storm' in cat or 'cyclone' in cat:
@@ -194,6 +204,7 @@ def calculate_risk(climate, events, terrain, mode):
         elif 'drought' in cat:
             score += int(5 * proximity_factor)
     
+    # Terrain risk for construction (0-20 points)
     if mode == 'construction' and terrain:
         slope = terrain.get('slope', 0)
         if slope > 15:
@@ -205,8 +216,10 @@ def calculate_risk(climate, events, terrain, mode):
         elif slope > 5:
             score += 5
     
+    # Normalize to 0-100
     score = min(100, max(0, score))
     
+    # Determine level
     if score > 70:
         level = "HIGH"
         color = "#e74c3c"
@@ -217,57 +230,68 @@ def calculate_risk(climate, events, terrain, mode):
         level = "LOW"
         color = "#2ecc71"
     
-    return {'score': score, 'level': level, 'color': color}
+    return {
+        'score': score,
+        'level': level,
+        'color': color
+    }
 
 # === RECOMMENDATIONS ===
 
 def generate_recommendations(risk, climate, events, terrain, mode):
+    """Generate specific recommendations"""
     recs = []
     score = risk['score']
     level = risk['level']
     
     if mode == 'route':
+        # Route-specific recommendations
         if level == "HIGH":
-            recs.append("⚠ TRAVEL NOT RECOMMENDED - High risk conditions")
+            recs.append(" TRAVEL NOT RECOMMENDED - High risk conditions")
             if climate and climate['total_precip'] > 100:
                 recs.append(f"Heavy rainfall: {climate['total_precip']}mm expected over {climate['days']} days")
             if events:
                 recs.append(f"⚡ {len(events)} active natural event(s) detected nearby")
-            recs.append("📱 Monitor SENAMHI and local alerts constantly")
-            recs.append("🚫 Avoid travel if possible, seek alternative routes")
+            recs.append(" Monitor SENAMHI and local alerts constantly")
+            recs.append(" Avoid travel if possible, seek alternative routes")
+            
         elif level == "MODERATE":
-            recs.append("⚠ Travel with CAUTION - Moderate risk detected")
+            recs.append(" Travel with CAUTION - Moderate risk detected")
             if climate and climate['rainy_days'] > 1:
                 recs.append(f"Rain expected {climate['rainy_days']} of {climate['days']} days")
-            recs.append("⏰ Allow extra travel time")
-            recs.append("🛣 Use main roads, avoid secondary routes")
-            recs.append("📦 Carry emergency supplies and charged phone")
+            recs.append(" Allow extra travel time")
+            recs.append(" Use main roads, avoid secondary routes")
+            recs.append(" Carry emergency supplies and charged phone")
+            
         else:
-            recs.append("✅ CONDITIONS FAVORABLE for travel")
-            recs.append("☀ Weather conditions are stable")
-            recs.append("🚗 Standard safety precautions apply")
-            recs.append("📻 Monitor forecasts during journey")
-    else:
+            recs.append(" CONDITIONS FAVORABLE for travel")
+            recs.append(" Weather conditions are stable")
+            recs.append(" Standard safety precautions apply")
+            recs.append(" Monitor forecasts during journey")
+    
+    else:  # construction
         if level == "HIGH":
-            recs.append("🚫 SITE NOT RECOMMENDED for construction")
+            recs.append(" SITE NOT RECOMMENDED for construction")
             if climate and climate['total_precip'] > 100:
-                recs.append(f"⚠ High flood risk: {climate['total_precip']}mm precipitation")
+                recs.append(f" High flood risk: {climate['total_precip']}mm precipitation")
             if terrain and terrain['slope'] > 10:
-                recs.append(f"⛰ Steep terrain: {terrain['slope']}° slope detected")
-            recs.append("📍 Consider alternative higher-ground location")
-            recs.append("🏗 If proceeding: elevated foundations mandatory")
+                recs.append(f" Steep terrain: {terrain['slope']}° slope detected")
+            recs.append(" Consider alternative higher-ground location")
+            recs.append(" If proceeding: elevated foundations mandatory")
+            
         elif level == "MODERATE":
-            recs.append("⚠ Construction POSSIBLE with precautions")
-            recs.append("🏗 Reinforced foundation design required")
-            recs.append("💧 Enhanced drainage systems necessary")
+            recs.append(" Construction POSSIBLE with precautions")
+            recs.append(" Reinforced foundation design required")
+            recs.append(" Enhanced drainage systems necessary")
             if climate and climate['rain_frequency'] > 0.4:
                 recs.append(f"Frequent rainfall - plan schedule carefully")
-            recs.append("📋 Conduct detailed geotechnical study")
+            recs.append(" Conduct detailed geotechnical study")
+            
         else:
-            recs.append("✅ SITE SUITABLE for construction")
-            recs.append("🏗 Standard foundation design adequate")
-            recs.append("💧 Basic drainage recommended")
-            recs.append("📊 Standard building permits apply")
+            recs.append(" SITE SUITABLE for construction")
+            recs.append(" Standard foundation design adequate")
+            recs.append(" Basic drainage recommended")
+            recs.append(" Standard building permits apply")
     
     return recs
 
@@ -296,6 +320,7 @@ def health():
 
 @app.route('/api/process', methods=['POST'])
 def process_analysis():
+    """Unified endpoint for route and construction analysis"""
     try:
         data = request.get_json()
         lat = float(data['lat'])
@@ -308,20 +333,25 @@ def process_analysis():
         log(f"ANALYSIS: {mode.upper()} at ({lat}, {lon})")
         log(f"{'='*60}")
         
+        # Fetch all data
         climate = get_climate_data(lat, lon, start, end)
         events = get_natural_events(lat, lon)
         terrain = get_elevation(lat, lon) if mode == 'construction' else {}
         
+        # Calculate risk
         risk = calculate_risk(climate, events, terrain, mode)
+        
+        # Generate recommendations
         recommendations = generate_recommendations(risk, climate, events, terrain, mode)
         
+        # Build response
         response = {
             'status': 'ok',
             'mode': mode,
             'risk': risk,
             'recommendations': recommendations,
             'climate': climate,
-            'events': events[:5],
+            'events': events[:5],  # Top 5 events
             'terrain': terrain if mode == 'construction' else None,
             'diagnostics': {
                 'precip_per_day': climate['precip_per_day'] if climate else 0,
@@ -351,4 +381,4 @@ if __name__ == '__main__':
     print("  • Open-Elevation - Terrain analysis")
     print("\nProcessing: 3-day window for fast response")
     print("="*60 + "\n")
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
