@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Guides</title>
+  <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Orbital Comms: Real-time information on natural disasters for effective response and preparedness">
+  <meta name="author" content="Orbital Comms Team">
+  <meta name="theme-color" content="#00FFEA"> 
+  <style>
+    body {
+      background: linear-gradient(180deg, #0d1b2a, #1b263b);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #00d9ff;
+    }
+
+    header a.back-home {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #00FFEA;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+    header a.back-home:hover {
+      color: #fff;
+      text-shadow: 0 0 8px #00FFEA;
+    }
+
+    h2 {
+      margin: 20px 0;
+      font-size: 2rem;
+      text-align: center;
+      animation: fadeInDown 1s ease;
+    }
+
+    .accordion {
+      width: 90%;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      margin-bottom: 40px;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .accordion-header {
+      padding: 15px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.1);
+      transition: background 0.3s ease;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .accordion-header:hover {
+      background: rgba(0,217,255,0.2);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 15px;
+      background: rgba(0,0,0,0.3);
+      transition: max-height 0.6s ease, padding 0.6s ease;
+    }
+
+    .accordion-content.open {
+      max-height: 500px;
+      padding: 15px;
+    }
+
+    .tip-box {
+      margin: 12px 0;
+      padding: 15px;
+      background: rgba(0,217,255,0.1);
+      border-left: 4px solid #00d9ff;
+      border-radius: 8px;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    @keyframes drop {
+      0% { transform: translateY(-10px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(10px); opacity: 0; }
+    }
+    @keyframes shine {
+      0% { opacity: 0.6; transform: rotate(0deg); }
+      100% { opacity: 1; transform: rotate(360deg); }
+    }
+
+    /* Animated icons */
+    .icon-house { animation: pulse 2s infinite; }
+    .icon-drop { animation: drop 1.5s infinite; }
+    .icon-sun { animation: shine 4s linear infinite; }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.5);
+      font-size: 0.9rem;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+   Emergency Guides — El Niño Phenomenon
+   <div>
+     <a href="../index.html" class="back-home">Back to Home</a>
+   </div>
+</header>
+
+<h2>Prepare in the Northern Zone</h2>
+
+<div class="accordion">
+
+  <!-- Before the Phenomenon -->
+  <div class="accordion-item">
+    <div class="accordion-header">🌞 <span class="icon-sun">☀️</span> Before the Phenomenon</div>
+    <div class="accordion-content">
+      <div class="tip-box">📦 Prepare an <b>emergency kit</b>: water, food, flashlight, radio, and medicines.</div>
+      <div class="tip-box icon-house">🏠 Reinforce your home: clean roofs and drains.</div>
+      <div class="tip-box">🚧 Identify safe <b>evacuation routes</b>.</div>
+      <div class="tip-box">📲 Subscribe to <b>early alerts</b>.</div>
+    </div>
+  </div>
+
+  <!-- During the Phenomenon -->
+  <div class="accordion-item">
+    <div class="accordion-header">💧 <span class="icon-drop">💦</span> During the Phenomenon</div>
+    <div class="accordion-content">
+      <div class="tip-box">🚨 Stay calm and follow official instructions.</div>
+      <div class="tip-box">❌ Do not cross rivers or overflowing streams.</div>
+      <div class="tip-box">📡 Use a radio to receive updates if internet is down.</div>
+      <div class="tip-box">👨‍👩‍👧‍👦 Help children and elderly first.</div>
+    </div>
+  </div>
+
+  <!-- After the Phenomenon -->
+  <div class="accordion-item">
+    <div class="accordion-header">🌱 <span class="icon-house">🏡</span> After the Phenomenon</div>
+    <div class="accordion-content">
+      <div class="tip-box">✅ Wait for authorization before returning home.</div>
+      <div class="tip-box">🚱 Avoid consuming contaminated water or food.</div>
+      <div class="tip-box">🧹 Clean and disinfect your house.</div>
+      <div class="tip-box">🤝 Support your community.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2025 Orbital Comms — Vital information to save lives
+</footer>
+
+<script>
+  const headers = document.querySelectorAll('.accordion-header');
+  headers.forEach(header => {
+    header.addEventListener('click', () => {
+      const content = header.nextElementSibling;
+      content.classList.toggle('open');
+    });
+  });
+</script>
+
+</body>
+</html>
