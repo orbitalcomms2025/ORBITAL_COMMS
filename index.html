@@ -6,24 +6,7 @@
   <title>Orbital Comms</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="css/index.css">
-  <style>
-    /* Login modal & Survey estilos */
-    .login-modal input, .login-modal select, .login-modal textarea, .login-modal button,
-    #surveyContainer input, #surveyContainer select, #surveyContainer textarea, #surveyContainer button { 
-      width: 90%; margin: 10px auto; padding: 10px; border-radius: 5px; border: none; 
-    }
-    .login-modal button, #surveyContainer button { 
-      cursor: pointer; background-color: #00ffff; font-weight: bold; 
-    }
-    .login-modal button:hover, #surveyContainer button:hover { background-color: #00cccc; }
-    .login-modal .message, #surveyContainer .message { margin-top: 15px; font-weight: bold; text-align: center; }
-    .login-modal .link { color: #00ffff; cursor: pointer; text-decoration: underline; margin-top: 10px; display: block; }
-
-    /* Survey container */
-    #surveyContainer { display:none; background:#1c1c1c; padding:30px; border-radius:15px; box-shadow:0 0 15px rgba(0,255,255,0.3); max-width:500px; margin:30px auto; }
-  </style>
+  <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
 
@@ -47,52 +30,39 @@
 </header>
 
 <section id="hero">
-  <!-- Video de fondo -->
   <video autoplay muted loop playsinline poster="./assets/images/logo3.png" id="hero-video">
     <source src="./assets/video/hero3.mp4" type="video/mp4">
   </video>
-
   <div class="overlay"></div>
-
   <div class="hero-content">
     <h1 class="pitch">Connecting Communities in Times of Crisis</h1>
     <p class="storyline">
       Real-time information on natural disasters for effective response and preparedness. Stay informed, stay safe.
     </p>
-
-    <!-- Botón Start -->
     <a href="#" class="cta-button" id="openLogin">Start</a>
-
   </div>
 </section>
 
-<!-- LOGIN/REGISTER MODAL -->
-<div id="loginModal" class="login-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000;">
-  <div class="container" style="background:#1c1c1c; padding:30px; border-radius:15px; box-shadow:0 0 15px rgba(0,255,255,0.3); max-width:400px; width:90%; position:relative;">
-    <span id="closeLogin" class="close-btn" style="position:absolute; top:15px; right:20px; font-size:24px; cursor:pointer; color:#00ffff;">&times;</span>
+<div id="loginModal" class="login-modal">
+  <div class="container">
+    <span id="closeLogin" class="close-btn">&times;</span>
     <h2> Orbital Comms</h2>
-
-    <!-- Login Form -->
     <form id="loginForm">
       <input type="email" id="email" placeholder="Email" required>
       <input type="password" id="password" placeholder="Password" required>
       <button type="submit">Login</button>
     </form>
-
-    <!-- Register Form -->
     <form id="registerForm" style="display:none;">
       <input type="text" id="name" placeholder="Full Name" required>
       <input type="email" id="regEmail" placeholder="Email" required>
       <input type="password" id="regPassword" placeholder="Password" required>
       <button type="submit">Register</button>
     </form>
-
     <span id="toggleForm" class="link">No account? Register here</span>
     <div id="message" class="message"></div>
   </div>
 </div>
 
-<!-- Survey Form -->
 <div id="surveyContainer">
   <h2>📝 Disaster Impact Survey</h2>
   <form id="surveyForm">
@@ -117,31 +87,24 @@
   <div id="surveyMessage" class="message"></div>
 </div>
 
-<!-- MISSION -->
 <section id="mission">
   <h2>How Orbital Comms Helps You</h2>
   <div class="cards">
-
-    <!--  Routes & Construction (movido y traducido) -->
     <a href="rutas.html" class="card story-block highlight">
       <img src="./assets/images/routes.jpg" alt="Routes & Construction">
       <h3>Routes & Construction</h3>
       <p>Predictive tools for evacuation routes and safe infrastructure planning.</p>
     </a>
-
-    <!--  Interactive Risk Maps -->
     <a href="map.html" class="card story-block highlight">
       <img src="./assets/images/Interactive Risk Maps.jpg" alt="Interactive Map">
       <h3>Interactive Risk Maps</h3>
       <p>Locate high-risk areas near you and plan safe routes.</p>
     </a>
-
     <a href="alerts.html" class="card story-block">
       <img src="./assets/images/Real-time Alerts.jpg" alt="Real-time Alerts">
       <h3>Real-time Alerts</h3>
       <p>Receive instant notifications about floods, earthquakes, and more.</p>
     </a>
-
     <a href="guides.html" class="card story-block">
       <img src="./assets/images/emergency guides.png" alt="Emergency Guides">
       <h3>Emergency Guides</h3>
@@ -150,8 +113,6 @@
   </div>
 </section>
 
-
-<!-- STORIES -->
 <section id="stories">
   <h2>Real Stories from Around the World</h2>
   <div class="carousel-container">
@@ -190,7 +151,6 @@
   </div>
 </section>
 
-<!-- PREPARE -->
 <section id="prepare">
   <h2>Prepare Yourself</h2>
   <div class="cards">
@@ -220,180 +180,6 @@
   <p>&copy; 2025 Orbital Comms. All rights reserved.</p>
 </footer>
 
-<!-- SCRIPTS -->
-<script>
-const API = "https://local-data.onrender.com";
-
-// ===== MENU TOGGLE =====
-const navToggle = document.getElementById('navToggle');
-const navLinks = document.getElementById('navLinks');
-navToggle.addEventListener('click', () => {
-  navLinks.classList.toggle('show');
-  navToggle.classList.toggle('open');
-});
-
-// ===== STICKY HEADER =====
-const header = document.querySelector('header');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) header.classList.add('sticky');
-  else header.classList.remove('sticky');
-});
-
-// ===== BACK TO TOP =====
-const backToTop = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-  backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
-});
-backToTop.addEventListener('click', () => { window.scrollTo({ top:0, behavior:'smooth' }); });
-
-// ===== CAROUSEL =====
-const carousel = document.querySelector('.carousel');
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
-let slideWidth = 360;
-let autoScroll = true;
-let scrollInterval;
-
-function scrollNext() {
-  if(carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth) {
-    carousel.scrollTo({ left:0, behavior:'smooth' });
-  } else {
-    carousel.scrollBy({ left: slideWidth, behavior:'smooth' });
-  }
-}
-if(prevBtn && nextBtn && carousel) {
-  nextBtn.addEventListener('click', () => { scrollNext(); resetAutoScroll(); });
-  prevBtn.addEventListener('click', () => {
-    if(carousel.scrollLeft <= 0) carousel.scrollTo({ left: carousel.scrollWidth, behavior:'smooth' });
-    else carousel.scrollBy({ left:-slideWidth, behavior:'smooth' });
-    resetAutoScroll();
-  });
-}
-function startAutoScroll() { scrollInterval = setInterval(scrollNext, 2000); }
-function resetAutoScroll() { if(autoScroll) { clearInterval(scrollInterval); startAutoScroll(); } }
-if(autoScroll) startAutoScroll();
-
-// ===== SCROLL REVEAL =====
-const revealElements = document.querySelectorAll('.card, .slide, .story-block');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.2 });
-revealElements.forEach(el => observer.observe(el));
-
-// ===== LOGIN MODAL & SURVEY =====
-const openLogin = document.getElementById('openLogin');
-const loginModal = document.getElementById('loginModal');
-const closeLogin = document.getElementById('closeLogin');
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
-const toggleForm = document.getElementById("toggleForm");
-const message = document.getElementById("message");
-const surveyContainer = document.getElementById("surveyContainer");
-const surveyForm = document.getElementById("surveyForm");
-const surveyMessage = document.getElementById("surveyMessage");
-let currentUserEmail = null;
-
-// Abrir modal
-openLogin.addEventListener('click', e => { e.preventDefault(); loginModal.style.display='flex'; });
-// Cerrar modal
-closeLogin.addEventListener('click', () => loginModal.style.display='none');
-window.addEventListener('click', e => { if(e.target === loginModal) loginModal.style.display='none'; });
-
-// Toggle login/register
-toggleForm.addEventListener("click", () => {
-  loginForm.style.display = loginForm.style.display === "none" ? "block" : "none";
-  registerForm.style.display = registerForm.style.display === "none" ? "block" : "none";
-  message.textContent = "";
-});
-
-// LOGIN
-loginForm.addEventListener("submit", async e => {
-  e.preventDefault();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-  try {
-    const res = await fetch(`${API}/login`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({email,password}) });
-    const data = await res.json();
-    message.textContent = data.message || "Error logging in";
-    message.style.color = res.ok ? "#00ff88" : "#ff5555";
-    if(res.ok){ currentUserEmail = email; loginModal.style.display='none'; surveyContainer.style.display='block'; autofillSurvey(email); }
-  } catch(err){ message.textContent="❌ Cannot connect to server"; message.style.color="#ff5555"; }
-});
-
-// REGISTER
-registerForm.addEventListener("submit", async e => {
-  e.preventDefault();
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("regEmail").value.trim();
-  const password = document.getElementById("regPassword").value.trim();
-  try {
-    const res = await fetch(`${API}/register`, { 
-      method: "POST", 
-      headers: { "Content-Type": "application/json" }, 
-      body: JSON.stringify({ name, email, password }) 
-    });
-    const data = await res.json();
-
-    if (res.ok) {
-      message.textContent = " Registro completado correctamente";
-      message.style.color = "#00ff88";
-      setTimeout(() => {
-        currentUserEmail = email;
-        loginModal.style.display = 'none';
-        surveyContainer.style.display = 'block';
-        autofillSurvey(email);
-      }, 1500);
-    } else {
-      message.textContent = data.message || " Error registrando usuario";
-      message.style.color = "#ff5555";
-    }
-  } catch (err) {
-    message.textContent = "No se puede conectar con el servidor";
-    message.style.color = "#ff5555";
-  }
-});
-
-// Autofill survey
-async function autofillSurvey(email){
-  try {
-    const res = await fetch(`${API}/survey/${email}`);
-    if(!res.ok) return;
-    const data = await res.json();
-    document.getElementById("surveyName").value = data.name || '';
-    document.getElementById("surveyEmail").value = data.email || '';
-  } catch(err){ console.error(err); }
-}
-
-// Submit survey
-surveyForm.addEventListener("submit", async e => {
-  e.preventDefault();
-  const payload = {
-    name: document.getElementById("surveyName").value.trim(),
-    email: document.getElementById("surveyEmail").value.trim(),
-    city: document.getElementById("city").value.trim(),
-    age: parseInt(document.getElementById("age").value.trim()) || null,
-    gender: document.getElementById("gender").value,
-    type_of_impact: document.getElementById("type_of_impact").value.trim(),
-    damage_to_housing: document.getElementById("damage_to_housing").value.trim(),
-    loss_of_crops: document.getElementById("loss_of_crops").value.trim(),
-    loss_of_property: document.getElementById("loss_of_property").value.trim(),
-    health_affected: document.getElementById("health_affected").value.trim(),
-    experience: document.getElementById("experience").value.trim()
-  };
-  try {
-    const res = await fetch(`${API}/survey`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
-    const data = await res.json();
-    surveyMessage.textContent = data.message || "Error submitting survey";
-    surveyMessage.style.color = res.ok ? "#00ff88" : "#ff5555";
-    if(res.ok) surveyForm.reset();
-    autofillSurvey(currentUserEmail);
-  } catch(err){ surveyMessage.textContent="❌ Cannot connect to server"; surveyMessage.style.color="#ff5555"; }
-});
-</script>
+<script src="./js/index.js"></script>
 </body>
 </html>
