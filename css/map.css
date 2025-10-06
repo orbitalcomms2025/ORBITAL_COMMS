@@ -1,6 +1,6 @@
-/* map.css — estilos mejorados con buscador de lugares */
+/* map.css — Professional English version with floating tabs */
 
-/* ================= RESET Y LAYOUT BÁSICO ================= */
+/* ================= RESET AND BASIC LAYOUT ================= */
 html, body {
   height: 100%;
   margin: 0;
@@ -57,7 +57,7 @@ html, body {
   font-size: 13px;
 }
 
-/* ================= BOTONES GLOBALES ================= */
+/* ================= GLOBAL BUTTONS ================= */
 .btn {
   background: #2b7;
   border: none;
@@ -92,45 +92,199 @@ html, body {
   background: #357ae8;
 }
 
-/* ================= TABS CONTROL ================= */
-.tabsControl {
-  display: flex;
-  gap: 4px;
-  margin-left: 8px;
-  flex-wrap: wrap;
-}
-
-.tabBtn {
-  background: #f5f5f5;
-  color: #000 !important;
-  border: none;
-  padding: 6px 12px;
-  cursor: pointer;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  transition: background 0.12s ease;
-  min-width: 120px;
-  text-align: center;
-}
-
-.tabBtn:hover {
-  background: #eee;
-}
-
-.tabBtn.active {
-  background: #48f;
-  color: #fff !important;
-}
-
-/* ================= MAPA ================= */
+/* ================= MAP ================= */
 #map {
   width: 100%;
   height: calc(100% - 48px);
   margin-top: 48px;
 }
 
-/* ================= BUSCADOR DE LUGARES ================= */
+/* ================= FLOATING TABS SYSTEM ================= */
+#floatingTabs {
+  position: fixed;
+  z-index: 1500;
+  pointer-events: none;
+}
+
+.floatTab {
+  pointer-events: all;
+  position: fixed;
+  background: rgba(72, 136, 255, 0.95);
+  color: #fff;
+  border: none;
+  padding: 12px 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  z-index: 1500;
+}
+
+.floatTab-right {
+  right: 0;
+  border-radius: 8px 0 0 8px;
+}
+
+.floatTab-right:nth-of-type(1) {
+  top: 120px;
+}
+
+.floatTab-right:nth-of-type(2) {
+  top: 220px;
+}
+
+.floatTab-right:nth-of-type(3) {
+  top: 320px;
+}
+
+.floatTab-bottom {
+  bottom: 20px;
+  right: 50%;
+  transform: translateX(50%);
+  writing-mode: horizontal-tb;
+  border-radius: 8px 8px 0 0;
+  padding: 8px 16px;
+}
+
+.floatTab:hover {
+  background: rgba(53, 122, 232, 0.95);
+  transform: translateX(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.floatTab-bottom:hover {
+  transform: translateX(50%) translateY(-4px);
+}
+
+.floatTab.active {
+  background: rgba(46, 204, 113, 0.95);
+}
+
+.floatTab span {
+  display: block;
+}
+
+/* ================= INITIAL TUTORIAL ================= */
+.tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.tutorial-content {
+  background: #fff;
+  color: #111;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 700px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tutorial-content h2 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  color: #111;
+}
+
+.tutorial-content > p {
+  margin: 0 0 24px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.tutorial-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.tutorial-step {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 12px;
+  border-left: 4px solid #48f;
+}
+
+.tutorial-step .step-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.tutorial-step h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #111;
+}
+
+.tutorial-step p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+}
+
+.btn-tutorial {
+  background: linear-gradient(135deg, #48f, #2ecc71);
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  width: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-tutorial:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(72, 136, 255, 0.4);
+}
+
+.btn-tutorial:active {
+  transform: translateY(0);
+}
+
+/* ================= SEARCH BAR ================= */
 #geocoder {
   position: absolute;
   top: 60px;
@@ -203,7 +357,7 @@ html, body {
   font-size: 12px;
 }
 
-/* ================= INFO PANE (COORDENADAS) ================= */
+/* ================= INFO PANE (COORDINATES) ================= */
 .infoPane {
   position: absolute;
   top: 140px;
@@ -226,7 +380,7 @@ html, body {
 /* ================= LEGEND PANE ================= */
 .legendPane {
   position: absolute;
-  top: 240px;
+  bottom: 90px;
   left: 12px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
@@ -272,10 +426,37 @@ html, body {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   max-width: 450px;
   font-size: 13px;
-  display: none;
   color: #000;
   max-height: 70vh;
   overflow-y: auto;
+}
+
+.tabContent[aria-hidden="true"] {
+  display: none;
+}
+
+.closeTabContent {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.08);
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.closeTabContent:hover {
+  background: rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
 }
 
 .tabContent h3,
@@ -294,7 +475,7 @@ html, body {
   font-size: 15px;
 }
 
-/* ================= PANEL DE CAPAS ARRASTRABLE ================= */
+/* ================= LAYERS PANEL (Draggable) ================= */
 #layerPanel {
   position: fixed;
   top: 80px;
@@ -318,8 +499,7 @@ html, body {
   display: none;
 }
 
-/* Header del panel (drag handle) */
-#layerPanel .panelHeader {
+.panelHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -333,11 +513,10 @@ html, body {
   border-bottom: 2px solid rgba(72, 136, 255, 0.2);
 }
 
-#layerPanel .panelHeader:active {
+.panelHeader:active {
   cursor: grabbing;
 }
 
-/* Lista de capas */
 #layerList {
   display: flex;
   flex-direction: column;
@@ -347,7 +526,6 @@ html, body {
   padding-right: 6px;
 }
 
-/* Fila de capa individual */
 .layer-row {
   display: flex;
   align-items: center;
@@ -364,7 +542,6 @@ html, body {
   border-color: rgba(72, 136, 255, 0.2);
 }
 
-/* Destacar capa SST especial */
 .layer-row.sst-special {
   background: linear-gradient(135deg, rgba(255, 152, 0, 0.08), rgba(255, 87, 34, 0.08));
   border: 1px solid rgba(255, 152, 0, 0.3);
@@ -398,8 +575,7 @@ html, body {
   line-height: 1.4;
 }
 
-/* Footer del panel */
-#layerPanel .panelFooter {
+.panelFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -408,102 +584,13 @@ html, body {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-#layerPanel .panelFooter .btn {
+.panelFooter .btn {
   padding: 8px 12px;
   font-size: 13px;
   flex: 1;
 }
 
-/* ================= LEAFLET CONTROL LAYERS (OCULTAR NATIVO) ================= */
-.leaflet-control-layers {
-  display: none !important;
-}
-
-/* ================= LEAFLET OTROS CONTROLES ================= */
-.leaflet-control,
-.leaflet-control-zoom {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border-radius: 6px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-}
-
-.leaflet-control-zoom a {
-  color: #111 !important;
-  font-weight: 700;
-}
-
-.leaflet-control-scale-line {
-  background: rgba(255, 255, 255, 0.9);
-  color: #111;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-}
-
-/* ================= TOAST NOTIFICATIONS ================= */
-#toastContainer {
-  pointer-events: none;
-  position: fixed;
-  top: 12px;
-  right: 12px;
-  z-index: 3000;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.toast {
-  pointer-events: auto;
-  background: #333;
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-  font-size: 13px;
-  max-width: 340px;
-  opacity: 1;
-  transition: opacity 400ms, transform 400ms;
-  font-weight: 500;
-}
-
-.toast.toast-error {
-  background: #ff6b6b;
-}
-
-.toast.toast-success {
-  background: #2ecc71;
-}
-
-.toast.toast-info {
-  background: #3498db;
-}
-
-/* ================= SCROLLBAR PERSONALIZADO ================= */
-#layerList::-webkit-scrollbar,
-#searchResults::-webkit-scrollbar,
-.tabContent::-webkit-scrollbar {
-  width: 6px;
-}
-
-#layerList::-webkit-scrollbar-track,
-#searchResults::-webkit-scrollbar-track,
-.tabContent::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
-}
-
-#layerList::-webkit-scrollbar-thumb,
-#searchResults::-webkit-scrollbar-thumb,
-.tabContent::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-}
-
-#layerList::-webkit-scrollbar-thumb:hover,
-#searchResults::-webkit-scrollbar-thumb:hover,
-.tabContent::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-/* ================= PANEL DE ANIMACIÓN TEMPORAL ================= */
+/* ================= SST ANIMATION PANEL (Draggable & Minimizable) ================= */
 #animationPanel {
   position: fixed;
   bottom: 20px;
@@ -514,24 +601,73 @@ html, body {
   color: #111;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  padding: 14px 18px;
+  padding: 0;
   min-width: 600px;
   max-width: 90vw;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+#animationPanel[data-minimized="true"] {
+  min-width: 300px;
 }
 
 .animPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(72, 136, 255, 0.12), rgba(0, 0, 0, 0.04));
+  border-bottom: 2px solid rgba(72, 136, 255, 0.3);
+  cursor: grab;
+  user-select: none;
+}
+
+.animPanelHeader:active {
+  cursor: grabbing;
+}
+
+.animPanelHeader strong {
   font-size: 15px;
   font-weight: 700;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid rgba(72, 136, 255, 0.3);
   color: #111;
+}
+
+.animHeaderButtons {
+  display: flex;
+  gap: 6px;
+}
+
+.headerBtn {
+  background: rgba(0, 0, 0, 0.08);
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.headerBtn:hover {
+  background: rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+}
+
+.headerBtn:active {
+  transform: scale(0.95);
 }
 
 .animControls {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding: 14px 18px;
 }
 
 .dateRange {
@@ -637,30 +773,109 @@ html, body {
   font-weight: 600;
   color: #111;
   text-align: center;
-  padding: 4px;
+  padding: 6px;
   background: rgba(72, 136, 255, 0.08);
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
-/* ================= RESPONSIVE ANIMACIÓN ================= */
-@media (max-width: 768px) {
-  #animationPanel {
-    min-width: auto;
-    width: calc(100% - 24px);
-    left: 12px;
-    transform: none;
-  }
-
-  .dateRange,
-  .playControls {
-    flex-direction: column;
-  }
-
-  .dateRange input[type="date"],
-  .animBtn {
-    width: 100%;
-  }
+/* ================= LEAFLET CONTROLS ================= */
+.leaflet-control-layers {
+  display: none !important;
 }
+
+.leaflet-control,
+.leaflet-control-zoom {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.leaflet-control-zoom a {
+  color: #111 !important;
+  font-weight: 700;
+}
+
+.leaflet-control-scale-line {
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth SST transition */
+.sst-transition {
+  transition: opacity 0.5s ease-in-out !important;
+}
+
+/* ================= TOAST NOTIFICATIONS ================= */
+#toastContainer {
+  pointer-events: none;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  pointer-events: auto;
+  background: #333;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  font-size: 13px;
+  max-width: 340px;
+  opacity: 1;
+  transition: opacity 400ms, transform 400ms;
+  font-weight: 500;
+}
+
+.toast.toast-error {
+  background: #ff6b6b;
+}
+
+.toast.toast-success {
+  background: #2ecc71;
+}
+
+.toast.toast-info {
+  background: #3498db;
+}
+
+/* ================= CUSTOM SCROLLBARS ================= */
+#layerList::-webkit-scrollbar,
+#searchResults::-webkit-scrollbar,
+.tabContent::-webkit-scrollbar,
+.tutorial-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+#layerList::-webkit-scrollbar-track,
+#searchResults::-webkit-scrollbar-track,
+.tabContent::-webkit-scrollbar-track,
+.tutorial-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+#layerList::-webkit-scrollbar-thumb,
+#searchResults::-webkit-scrollbar-thumb,
+.tabContent::-webkit-scrollbar-thumb,
+.tutorial-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+#layerList::-webkit-scrollbar-thumb:hover,
+#searchResults::-webkit-scrollbar-thumb:hover,
+.tabContent::-webkit-scrollbar-thumb:hover,
+.tutorial-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
 @media (max-width: 768px) {
   #topbar {
     flex-wrap: wrap;
@@ -670,7 +885,8 @@ html, body {
   }
 
   #topbar h1 {
-    font-size: 14px;
+    font-size: 13px;
+    width: 100%;
   }
 
   #controls {
@@ -678,63 +894,302 @@ html, body {
     justify-content: flex-start;
     margin-left: 0;
     margin-top: 4px;
+    gap: 4px;
   }
 
-  .tabBtn {
-    min-width: 100px;
-    padding: 6px 8px;
-    font-size: 12px;
+  #topbar label {
+    font-size: 11px;
+  }
+
+  #topbar input[type="date"] {
+    font-size: 11px;
+    padding: 4px 6px;
+    min-width: 110px;
+  }
+
+  .btn {
+    font-size: 11px;
+    padding: 5px 8px;
   }
 
   #map {
-    height: calc(100% - 60px);
-    margin-top: 60px;
+    height: calc(100% - 90px);
+    margin-top: 90px;
   }
 
-  #geocoder {
-    top: 70px;
-    width: calc(100% - 24px);
-    left: 12px;
-    transform: none;
+  /* Floating tabs mobile */
+  .floatTab {
+    font-size: 10px;
+    padding: 10px 6px;
   }
 
-  .infoPane {
-    left: 8px;
-    top: 160px;
-    max-width: calc(100vw - 16px);
+  .floatTab-right:nth-of-type(1) {
+    top: 100px;
   }
 
-  .legendPane {
-    left: 8px;
+  .floatTab-right:nth-of-type(2) {
+    top: 180px;
+  }
+
+  .floatTab-right:nth-of-type(3) {
     top: 260px;
   }
 
-  .tabContent {
-    right: 8px;
-    top: 70px;
-    max-width: calc(100vw - 16px);
+  .floatTab-bottom {
+    bottom: 8px;
+    padding: 6px 12px;
+    font-size: 11px;
   }
 
-  #layerPanel {
-    min-width: 200px;
-    max-width: calc(100vw - 16px);
+  /* Search mobile */
+  #geocoder {
+    top: 100px;
+    width: calc(100% - 16px);
     left: 8px;
-    right: 8px;
-    top: 72px;
+    transform: none;
+    max-width: none;
   }
 
-  #layerPanel .panelHeader {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
   #searchInput {
     font-size: 13px;
-    padding: 10px 14px;
+    padding: 10px 12px;
   }
 
   .search-item {
     padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  /* Info pane mobile */
+  .infoPane {
+    left: 8px;
+    top: 180px;
+    max-width: calc(100vw - 16px);
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  /* Legend pane mobile */
+  .legendPane {
+    left: 8px;
+    bottom: 8px;
+    max-width: 140px;
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .legendPane .color-box {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Tab content mobile */
+  .tabContent {
+    right: 8px;
+    left: 8px;
+    top: 100px;
+    max-width: calc(100vw - 16px);
+    font-size: 12px;
+    max-height: 60vh;
+    padding: 12px;
+  }
+
+  .tabContent h3 {
+    font-size: 16px;
+  }
+
+  .tabContent h4 {
+    font-size: 14px;
+  }
+
+  /* Layers panel mobile */
+  #layerPanel {
+    min-width: auto;
+    max-width: calc(100vw - 16px);
+    left: 8px;
+    right: 8px;
+    top: 100px;
+    width: calc(100% - 16px);
+  }
+
+  #layerPanel .panelHeader {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  #layerList {
+    max-height: 40vh;
+  }
+
+  .layer-row {
+    padding: 8px 10px;
+  }
+
+  .layer-row label {
+    font-size: 12px;
+  }
+
+  .layer-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Animation panel mobile */
+  #animationPanel {
+    min-width: auto;
+    width: calc(100% - 16px);
+    left: 8px;
+    bottom: 8px;
+    transform: none;
+  }
+
+  #animationPanel[data-minimized="true"] {
+    min-width: auto;
+    width: auto;
+  }
+
+  .animPanelHeader {
+    padding: 10px 12px;
+  }
+
+  .animPanelHeader strong {
+    font-size: 13px;
+  }
+
+  .animControls {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .dateRange,
+  .playControls {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .dateRange label,
+  .speedControl label {
+    font-size: 12px;
+  }
+
+  .dateRange input[type="date"],
+  .animBtn,
+  .speedControl select {
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .currentDateDisplay {
+    font-size: 12px;
+  }
+
+  .headerBtn {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+
+  /* Tutorial mobile */
+  .tutorial-content {
+    padding: 24px;
+    width: 95%;
+  }
+
+  .tutorial-content h2 {
+    font-size: 22px;
+  }
+
+  .tutorial-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  #topbar h1 {
+    font-size: 12px;
+  }
+
+  .btn {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+
+  #searchInput {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .search-item {
+    padding: 8px 10px;
+  }
+
+  .infoPane,
+  .legendPane {
+    font-size: 10px;
+  }
+
+  .tabContent {
+    font-size: 11px;
+  }
+
+  #animationPanel {
+    bottom: 4px;
+    left: 4px;
+    width: calc(100% - 8px);
+  }
+
+  .animPanelHeader {
+    padding: 8px 10px;
+  }
+
+  .animPanelHeader strong {
+    font-size: 12px;
+  }
+
+  .animControls {
+    padding: 10px;
+  }
+
+  .tutorial-content {
+    padding: 20px;
+  }
+
+  .tutorial-content h2 {
+    font-size: 20px;
+  }
+
+  .tutorial-step .step-icon {
+    font-size: 24px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  #map {
+    height: calc(100% - 70px);
+    margin-top: 70px;
+  }
+
+  .infoPane {
+    top: 80px;
+    right: 8px;
+    left: auto;
+  }
+
+  .legendPane {
+    bottom: 8px;
+    right: 8px;
+    left: auto;
+  }
+
+  .tabContent {
+    top: 80px;
+    max-height: 70vh;
+  }
+
+  #animationPanel {
+    bottom: 8px;
+    max-width: 500px;
   }
 }
