@@ -2,7 +2,7 @@
 // Version 2.1 - Professional UX with Clear Visual Feedback
 
 (() => {
-  const API_BASE = 'http://localhost:5000';
+  const API_BASE = 'https://nasa-climate-api.onrender.com';
   
   // Configuration
   const CONFIG = {
@@ -1533,3 +1533,4 @@
   }
 
 })();
+
