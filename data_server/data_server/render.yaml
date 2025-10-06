@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: local-data
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "node server.js"
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://orbitalcomms_db_user:4tS7tXkv1KCs9Cz5UjBc9QKmGdHG1WOq@dpg-d3gkqendiees73d7m8m0-a.oregon-postgres.render.com/orbitalcomms_db
